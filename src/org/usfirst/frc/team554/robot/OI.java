@@ -12,6 +12,7 @@ import org.usfirst.frc.team554.robot.commands.ExampleCommand;
  */
 public class OI {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	
 	Joystick Ps4 = new Joystick(1);
 	Joystick driver_Joystick = new Joystick(0);
@@ -26,6 +27,8 @@ public class OI {
     Button LStickButton = new JoystickButton(Ps4, 11);
     Button RStickButton = new JoystickButton(Ps4,12);
 =======
+=======
+>>>>>>> origin/MainComputer
 	//Joysticks: Xbox One Controller -> Operator, Joystick -> Driver
 	Joystick Xbone = new Joystick(1);
 	Button L1 = new JoystickButton(Xbone, 5);
@@ -38,7 +41,10 @@ public class OI {
     Button Triangle = new JoystickButton(Xbone, 4);
     Button LStickButton = new JoystickButton(Xbone, 11);
     Button RStickButton = new JoystickButton(Xbone,12);
+<<<<<<< HEAD
 >>>>>>> master
+=======
+>>>>>>> origin/MainComputer
     
 	public Joystick getOperator(){
 		return Xbone;
