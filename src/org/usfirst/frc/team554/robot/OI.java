@@ -12,7 +12,8 @@ import org.usfirst.frc.team554.robot.commands.ExampleCommand;
  */
 public class OI {
 	
-	Joystick Ps4 = new Joystick(0);
+	Joystick Ps4 = new Joystick(1);
+	Joystick driver_Joystick = new Joystick(0);
 	Button L1 = new JoystickButton(Ps4, 5);
 	Button L2 = new JoystickButton(Ps4, 7);
 	Button R1 = new JoystickButton(Ps4, 6);
@@ -27,6 +28,12 @@ public class OI {
 	public Joystick getPs4(){
 		return Ps4;
 	}
+	
+	public Joystick getDriver(){
+		return driver_Joystick;
+	}
+	
+	
     //// CREATING BUTTONS
     // One type of button is a joystick button which is any button on a joystick.
     // You create one by telling it which joystick it's on and which button
