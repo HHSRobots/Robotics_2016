@@ -11,21 +11,21 @@ import org.usfirst.frc.team554.robot.commands.ExampleCommand;
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
-	
-	Joystick Ps4 = new Joystick(0);
-	Button L1 = new JoystickButton(Ps4, 5);
-	Button L2 = new JoystickButton(Ps4, 7);
-	Button R1 = new JoystickButton(Ps4, 6);
-	Button R2 = new JoystickButton(Ps4, 8);
-	Button Square = new JoystickButton(Ps4, 1);
-	Button Cross = new JoystickButton(Ps4, 2);
-	Button Circle = new JoystickButton(Ps4, 3);
-    Button Triangle = new JoystickButton(Ps4, 4);
-    Button LStickButton = new JoystickButton(Ps4, 11);
-    Button RStickButton = new JoystickButton(Ps4,12);
+	//Joysticks: Xbox One Controller -> Operator, Joystick -> Driver
+	Joystick Xbone = new Joystick(1);
+	Button L1 = new JoystickButton(Xbone, 5);
+	Button L2 = new JoystickButton(Xbone, 7);
+	Button R1 = new JoystickButton(Xbone, 6);
+	Button R2 = new JoystickButton(Xbone, 8);
+	Button Square = new JoystickButton(Xbone, 1);
+	Button Cross = new JoystickButton(Xbone, 2);
+	Button Circle = new JoystickButton(Xbone, 3);
+    Button Triangle = new JoystickButton(Xbone, 4);
+    Button LStickButton = new JoystickButton(Xbone, 11);
+    Button RStickButton = new JoystickButton(Xbone,12);
     
-	public Joystick getPs4(){
-		return Ps4;
+	public Joystick getOperator(){
+		return Xbone;
 	}
     //// CREATING BUTTONS
     // One type of button is a joystick button which is any button on a joystick.
