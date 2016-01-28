@@ -11,6 +11,7 @@ import org.usfirst.frc.team554.robot.commands.ExampleCommand;
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
+<<<<<<< HEAD
 	
 	Joystick Ps4 = new Joystick(1);
 	Joystick driver_Joystick = new Joystick(0);
@@ -24,9 +25,23 @@ public class OI {
     Button Triangle = new JoystickButton(Ps4, 4);
     Button LStickButton = new JoystickButton(Ps4, 11);
     Button RStickButton = new JoystickButton(Ps4,12);
+=======
+	//Joysticks: Xbox One Controller -> Operator, Joystick -> Driver
+	Joystick Xbone = new Joystick(1);
+	Button L1 = new JoystickButton(Xbone, 5);
+	Button L2 = new JoystickButton(Xbone, 7);
+	Button R1 = new JoystickButton(Xbone, 6);
+	Button R2 = new JoystickButton(Xbone, 8);
+	Button Square = new JoystickButton(Xbone, 1);
+	Button Cross = new JoystickButton(Xbone, 2);
+	Button Circle = new JoystickButton(Xbone, 3);
+    Button Triangle = new JoystickButton(Xbone, 4);
+    Button LStickButton = new JoystickButton(Xbone, 11);
+    Button RStickButton = new JoystickButton(Xbone,12);
+>>>>>>> master
     
-	public Joystick getPs4(){
-		return Ps4;
+	public Joystick getOperator(){
+		return Xbone;
 	}
 	
 	public Joystick getDriver(){

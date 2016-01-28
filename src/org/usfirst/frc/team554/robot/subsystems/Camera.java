@@ -64,7 +64,7 @@ public class Camera extends Subsystem {
 	}
 	
 	
-	public void cameraSide(){
+	public void cameraBack(){
 		changeDone = false;
 		NIVision.IMAQdxStopAcquisition(curCam);
     	NIVision.IMAQdxConfigureGrab(camBack);
