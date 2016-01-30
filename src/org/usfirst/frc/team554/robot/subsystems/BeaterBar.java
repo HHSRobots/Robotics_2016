@@ -3,6 +3,7 @@ package org.usfirst.frc.team554.robot.subsystems;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.Joystick;
 
 
 /**
@@ -20,6 +21,34 @@ public class BeaterBar extends Subsystem {
 		
 	}
 	
+	
+	public void moveBeater(Joystick operator_joystick)
+	{
+		//which style of beating are we using?
+		//if joystick, delete moveBeaterButton,
+		//if Button, delete moveBeaterJoystick
+	}
+	
+	public void moveBeaterJoystick(Joystick operator_joystick)
+	{
+		if (operator_joystick.getY() > 0.1)
+		{
+			BeaterBarMotor.set(1000000000);//value still up for debate
+		}
+		else if(operator_joystick.getY() < -0.1)
+		{
+			BeaterBarMotor.set(-1000000000);//value still up for debate
+		}
+		else
+		{
+			BeaterBarMotor.set(0);
+		}
+	}
+	
+	public void moveBeaterButton(Joystick operator_joystick)
+	{
+		//TODO find out how many speeds they want, the crimeny buggers
+	}
 	
 	public void end(){
 		// BeaterBar_Rotate.end();
