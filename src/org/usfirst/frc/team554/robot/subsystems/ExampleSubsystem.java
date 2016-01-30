@@ -17,3 +17,18 @@ public class ExampleSubsystem extends Subsystem {
     }
 }
 
+/*
+
+Subsytems:
+Camera
+Arm
+BeaterBar
+DriveTrain
+PDP
+
+
+
+
+
+
+*/
