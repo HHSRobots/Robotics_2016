@@ -14,7 +14,8 @@ public class Arm extends Subsystem {
 	
 	
 	public void end(){
-		// Arm_StopMovement() 
+		// Arm_Raise.end();
+		//Arm_Lower.end();
 	}
 	
 	

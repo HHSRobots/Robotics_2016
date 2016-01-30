@@ -32,24 +32,24 @@ public class OI {
     //THIS STILL NEEDS TO BE FIXED!!!!!!!!!!!!!!!!!!!!!
     
     
-	Joystick Xbone = new Joystick(1);
-	Button L1 = new JoystickButton(Xbone, 5);
-	Button L2 = new JoystickButton(Xbone, 7);
-	Button R1 = new JoystickButton(Xbone, 6);
-	Button R2 = new JoystickButton(Xbone, 8);
-	Button Square = new JoystickButton(Xbone, 1);
-	Button Cross = new JoystickButton(Xbone, 2);
-	Button Circle = new JoystickButton(Xbone, 3);
-    Button Triangle = new JoystickButton(Xbone, 4);
-    Button LStickButton = new JoystickButton(Xbone, 11);
-    Button RStickButton = new JoystickButton(Xbone,12);
+	Joystick xBoxOneController = new Joystick(1);
+	Button L1 = new JoystickButton(xBoxOneController, 5);
+	Button L2 = new JoystickButton(xBoxOneController, 7);
+	Button R1 = new JoystickButton(xBoxOneController, 6);
+	Button R2 = new JoystickButton(xBoxOneController, 8);
+	Button Square = new JoystickButton(xBoxOneController, 1);
+	Button Cross = new JoystickButton(xBoxOneController, 2);
+	Button Circle = new JoystickButton(xBoxOneController, 3);
+    Button Triangle = new JoystickButton(xBoxOneController, 4);
+    Button LStickButton = new JoystickButton(xBoxOneController, 11);
+    Button RStickButton = new JoystickButton(xBoxOneController,12);
     
     
     
     
 
 	public Joystick getOperator(){
-		return Xbone;
+		return xBoxOneController;
 	}
 	
 	public Joystick getDriver(){
