@@ -28,7 +28,8 @@ public class Robot extends IterativeRobot {
 	public static PDP PowerDistPanel;
 	public int AutoProgramNumber;
 	public int CameraUpdate;
-
+	
+	
     Command autonomousCommand;
     SendableChooser chooser;
 
