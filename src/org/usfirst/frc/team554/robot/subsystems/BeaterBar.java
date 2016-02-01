@@ -24,7 +24,7 @@ public class BeaterBar extends Subsystem {
 	
 	public void moveBeater(Joystick operator_joystick)
 	{
-		//which style of beating are we using?
+		//which style of beating are we using?        I think we should go ahead and use the joystick as the movement control, but we can ask tonight. - Brian 
 		//if joystick, delete moveBeaterButton,
 		//if Button, delete moveBeaterJoystick
 	}
