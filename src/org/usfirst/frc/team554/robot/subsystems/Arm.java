@@ -4,16 +4,18 @@ import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Arm extends Subsystem {
 	private SpeedController armMotorLeft; 
 	private SpeedController armMotorRight;
 	private Encoder armMotorLeftEncoder, armMotorRightEncoder;
+	private boolean hasBeenReset;
 	
 	
 	
 	// Backwards is spinning toward robot while forward is spinning away from robot
-	private double armBackwardLimit, armForwardLimit;
+	private double armUpperLimit, armLowerLimit;
 	
 	
 	public Arm() {
@@ -29,8 +31,10 @@ public class Arm extends Subsystem {
     	armMotorLeftEncoder.setDistancePerPulse(1./256.); //SET
 		
 		
-		armBackwardLimit = 0.0;
-		armForwardLimit = 1.0; /// This still needs to be set. 
+		armUpperLimit = 0.0;
+		armLowerLimit = 1.0; /// This still needs to be set. 
+		
+		hasBeenReset = false;
 		
 	}
 	
@@ -51,16 +55,21 @@ public class Arm extends Subsystem {
 		
 	}
 	public void resetEncoder(){
-		armMotorLeftEncoder.reset();
-		armMotorRightEncoder.reset();
+		if ( ! hasBeenReset){
+			armMotorLeftEncoder.reset();
+			armMotorRightEncoder.reset();
+			hasBeenReset = true;
+		}
     }
 	
-	public boolean didHitForwardLimit(){
-		return armMotorLeftEncoder.getDistance() >= armForwardLimit || armMotorRightEncoder.getDistance() >= armForwardLimit;
+	public boolean didHitLowerLimit(){
+		return armMotorLeftEncoder.getDistance() >= armLowerLimit || armMotorRightEncoder.getDistance() >= armLowerLimit;
 	}
-	public boolean didHitBackwardLimit(){
-		return armMotorLeftEncoder.getDistance() <= armBackwardLimit || armMotorRightEncoder.getDistance() <= armBackwardLimit;
+	public boolean didHitUpperLimit(){
+		return armMotorLeftEncoder.getDistance() <= armUpperLimit || armMotorRightEncoder.getDistance() <= armUpperLimit;
 	}
+	
+	
 	
 	
 	protected void initDefaultCommand() {
@@ -70,6 +79,7 @@ public class Arm extends Subsystem {
 	}
 	
 	public void log(){
+		SmartDashboard.putNumber("Current Percentage of Movement", (armMotorLeftEncoder.getDistance() / armLowerLimit) * 100  );
 		
 	}
 
