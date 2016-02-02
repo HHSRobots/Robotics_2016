@@ -17,7 +17,7 @@ public class InnerBeaterBar extends Subsystem {
 	
 	public InnerBeaterBar(){
 		super();
-		BeaterBarMotor = new Talon(3);//Talon number up for debate.
+		BeaterBarMotor = new Talon(4);//Talon number up for debate.
 		
 	}
 	
