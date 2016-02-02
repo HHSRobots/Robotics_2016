@@ -24,20 +24,14 @@ public class BeaterBar extends Subsystem {
 	
 	public void moveBeater(Joystick operator_joystick)
 	{
-		//which style of beating are we using?        I think we should go ahead and use the joystick as the movement control, but we can ask tonight. - Brian 
-		//if joystick, delete moveBeaterButton,
-		//if Button, delete moveBeaterJoystick
+		moveBeaterJoystick(operator_joystick);
 	}
 	
 	public void moveBeaterJoystick(Joystick operator_joystick)
 	{
-		if (operator_joystick.getY() > 0.1)
+		if (Math.abs(operator_joystick.getY()) > 0.1)
 		{
-			BeaterBarMotor.set(1);//value still up for debate
-		}
-		else if(operator_joystick.getY() < -0.1)
-		{
-			BeaterBarMotor.set(-1);//value still up for debate
+			BeaterBarMotor.set(operator_joystick.getY());//value still up for debate
 		}
 		else
 		{
