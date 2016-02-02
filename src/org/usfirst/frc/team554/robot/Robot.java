@@ -25,6 +25,7 @@ public class Robot extends IterativeRobot {
 	public static DriveTrain drivetrain;
 	public static Arm arm;
 	public static BeaterBar beaterbar;
+	public static BeaterBarArm beaterbararm;
 	public static Camera camera;
 	public static PDP PowerDistPanel;
 	public int AutoProgramNumber;
