@@ -24,10 +24,10 @@ public class Arm extends Subsystem {
 		super();
 		
 		
-		armMotorLeft = new Talon(0); // THIS STILL NEEDS TO BE SET
-		armMotorRight = new Talon(1); // SET 
-		armMotorLeftEncoder = new Encoder(7,8); // SET
-		armMotorRightEncoder = new Encoder(9,10);// SET
+		armMotorLeft = new Talon(7); // THIS STILL NEEDS TO BE SET
+		armMotorRight = new Talon(6); // SET 
+		armMotorLeftEncoder = new Encoder(6,7); // SET
+		armMotorRightEncoder = new Encoder(8,9);// SET
 		
 		armMotorRightEncoder.setDistancePerPulse(1./256.); //SET
     	armMotorLeftEncoder.setDistancePerPulse(1./256.); //SET
