@@ -21,29 +21,36 @@ public class BeaterBar extends Subsystem {
 		
 	}
 	
-	
 	public void moveBeater(Joystick operator_joystick)
 	{
-		//which style of beating are we using?        I think we should go ahead and use the joystick as the movement control, but we can ask tonight. - Brian 
-		//if joystick, delete moveBeaterButton,
-		//if Button, delete moveBeaterJoystick
+		moveBeaterButton(operator_joystick);
 	}
 	
-	public void moveBeaterJoystick(Joystick operator_joystick)
+	public void moveBeaterButtons(Joystick operator_joystick)//If you are wondering why this is the way it is, This is the way Luke set it up. It should be by triggers and have three settings
 	{
-		if (operator_joystick.getY() > 0.1)
+		//left trigger is fast mode for arm beater
+		//left shouldery button is slow mode
+		//right shouldery button is reverse (slow?)
+		//X should cancel
+		if(operator_joystick.getZ()>0.1)//should work with the trigger? Hopefully?
 		{
-			BeaterBarMotor.set(1);//value still up for debate
+			BeaterBarMotor.set(1);//value up for change
 		}
-		else if(operator_joystick.getY() < -0.1)
+		else if(operator_joystick.getRawButton(5))//slow forwards, should be shoulder left
 		{
-			BeaterBarMotor.set(-1);//value still up for debate
+			BeaterBarMotor.set(0.5);//value still up for debate
 		}
-		else
+		else if(operator_joystick.getRawButton(6))//slow backwards, should be shoulder right
+		{
+			BeaterBarMotor.set(-0.5);
+		}
+		else if(operator_joystick.getRawButton(3))
 		{
 			BeaterBarMotor.set(0);
 		}
 	}
+	
+	
 	
 	public void moveBeaterButton(Joystick operator_joystick)
 	{
