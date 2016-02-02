@@ -8,16 +8,16 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 /**
  *
  */
-public class BeaterBarArm extends Subsystem {
+public class OuterBeaterBar extends Subsystem {
     
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
     
 private SpeedController BeaterBarMotor;
 	
-	public BeaterBarArm(){
+	public OuterBeaterBar(){
 		super();
-		BeaterBarMotor = new Talon(4);//Talon number up for debate.
+		BeaterBarMotor = new Talon(5);//Talon number up for debate.
 		
 	}
 	
@@ -45,7 +45,7 @@ private SpeedController BeaterBarMotor;
 	}
 	
 	public void end(){
-		// BeaterBar_Rotate.end();
+		BeaterBarMotor.set(0);
 	}
 	
 	

@@ -9,15 +9,15 @@ import edu.wpi.first.wpilibj.Joystick;
 /**
  *
  */
-public class BeaterBar extends Subsystem {
+public class InnerBeaterBar extends Subsystem {
     
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 	private SpeedController BeaterBarMotor;
 	
-	public BeaterBar(){
+	public InnerBeaterBar(){
 		super();
-		BeaterBarMotor = new Talon(3);//Talon number up for debate.
+		BeaterBarMotor = new Talon(4);//Talon number up for debate.
 		
 	}
 	
@@ -58,7 +58,7 @@ public class BeaterBar extends Subsystem {
 	}
 	
 	public void end(){
-		// BeaterBar_Rotate.end();
+		BeaterBarMotor.set(0);
 	}
 	
 	
