@@ -1,6 +1,9 @@
 package org.usfirst.frc.team554.robot.subsystems;
 
+import org.usfirst.frc.team554.robot.commands.Arm_Move;
+
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -10,7 +13,6 @@ public class Arm extends Subsystem {
 	private SpeedController armMotorLeft; 
 	private SpeedController armMotorRight;
 	private Encoder armMotorLeftEncoder, armMotorRightEncoder;
-	private boolean hasBeenReset;
 	
 	
 	
@@ -22,8 +24,8 @@ public class Arm extends Subsystem {
 		super();
 		
 		
-		armMotorLeft = new Talon(1); // THIS STILL NEEDS TO BE SET
-		armMotorRight = new Talon(2); // SET 
+		armMotorLeft = new Talon(0); // THIS STILL NEEDS TO BE SET
+		armMotorRight = new Talon(1); // SET 
 		armMotorLeftEncoder = new Encoder(7,8); // SET
 		armMotorRightEncoder = new Encoder(9,10);// SET
 		
@@ -34,7 +36,6 @@ public class Arm extends Subsystem {
 		armUpperLimit = 0.0;
 		armLowerLimit = 1.0; /// This still needs to be set. 
 		
-		hasBeenReset = false;
 		
 	}
 	
@@ -45,21 +46,25 @@ public class Arm extends Subsystem {
     }
 	
 	
-	public void armMove(double speed){
+	public void armMove(Joystick stick){
 		// Remember! one of these motors will be negative. This must be fixed when updated.
-		boolean ifweHaventconfigedyet = true;
-		if( ifweHaventconfigedyet)
-			return;
-		armMotorLeft.set(speed);
-		armMotorRight.set(speed);
+		if (Math.abs(stick.getZ()) > 0.1)
+		{
+			armMotorLeft.set(stick.getZ());//value still up for debate
+			armMotorRight.set(-stick.getZ());
+		}
+		
+		else
+		{
+			armMotorLeft.set(0);
+			armMotorRight.set(0);
+		}
 		
 	}
 	public void resetEncoder(){
-		if ( ! hasBeenReset){
 			armMotorLeftEncoder.reset();
 			armMotorRightEncoder.reset();
-			hasBeenReset = true;
-		}
+	
     }
 	
 	public boolean didHitLowerLimit(){
@@ -75,7 +80,7 @@ public class Arm extends Subsystem {
 	protected void initDefaultCommand() {
 		// TODO Auto-generated method stub
 		
-		
+		setDefaultCommand( new Arm_Move());
 	}
 	
 	public void log(){
