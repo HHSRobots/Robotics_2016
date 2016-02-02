@@ -1,17 +1,13 @@
 package org.usfirst.frc.team554.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
-import org.usfirst.frc.team554.robot.Robot;
-import org.usfirst.frc.team554.robot.subsystems.*;
-
 
 /**
  *
  */
-public class BeaterBar_Beat extends Command {
+public class DriveTrain_GyroDrive extends Command {
 
-    public BeaterBar_Beat() {
-    	requires(Robot.beaterbar);
+    public DriveTrain_GyroDrive() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     }
@@ -22,7 +18,6 @@ public class BeaterBar_Beat extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.beaterbar.moveBeater(Robot.oi.getOperator());
     }
 
     // Make this return true when this Command no longer needs to run execute()
