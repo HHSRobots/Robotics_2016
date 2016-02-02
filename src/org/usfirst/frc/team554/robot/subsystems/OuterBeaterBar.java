@@ -17,7 +17,7 @@ private SpeedController BeaterBarMotor;
 	
 	public OuterBeaterBar(){
 		super();
-		BeaterBarMotor = new Talon(4);//Talon number up for debate.
+		BeaterBarMotor = new Talon(5);//Talon number up for debate.
 		
 	}
 	
