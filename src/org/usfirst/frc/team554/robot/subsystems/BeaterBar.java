@@ -33,11 +33,11 @@ public class BeaterBar extends Subsystem {
 	{
 		if (operator_joystick.getY() > 0.1)
 		{
-			BeaterBarMotor.set(1000000000);//value still up for debate
+			BeaterBarMotor.set(1);//value still up for debate
 		}
 		else if(operator_joystick.getY() < -0.1)
 		{
-			BeaterBarMotor.set(-1000000000);//value still up for debate
+			BeaterBarMotor.set(-1);//value still up for debate
 		}
 		else
 		{
