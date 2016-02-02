@@ -29,13 +29,9 @@ public class BeaterBar extends Subsystem {
 	
 	public void moveBeaterJoystick(Joystick operator_joystick)
 	{
-		if (operator_joystick.getY() > 0.1)
+		if (Math.abs(operator_joystick.getY()) > 0.1)
 		{
 			BeaterBarMotor.set(operator_joystick.getY());//value still up for debate
-		}
-		else if(operator_joystick.getY() < -0.1)
-		{
-			BeaterBarMotor.set(-operator_joystick.getY());//value still up for debate
 		}
 		else
 		{
