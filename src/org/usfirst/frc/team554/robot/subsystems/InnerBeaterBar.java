@@ -32,11 +32,11 @@ public class InnerBeaterBar extends Subsystem {
 		//left shouldery button is slow mode
 		//right shouldery button is reverse (slow?)
 		//X should cancel
-		if(operator_joystick.getZ()<=-0.1)//should work with the trigger? Hopefully?
+		if(operator_joystick.getZ()<=-0.1&&!operator_joystick.getRawButton(5)&&!operator_joystick.getRawButton(6))//should work with the trigger? Hopefully?
 		{
 			BeaterBarMotor.set(1);//value up for change
 		}
-		else if(operator_joystick.getRawButton(5))//slow forwards, should be shoulder left
+		else if(operator_joystick.getRawButton(5)&&!operator_joystick.getRawButton(6))//slow forwards, should be shoulder left
 		{
 			BeaterBarMotor.set(0.5);//value still up for debate
 		}
