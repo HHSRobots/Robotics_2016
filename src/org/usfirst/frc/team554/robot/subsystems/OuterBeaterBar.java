@@ -29,20 +29,16 @@ private SpeedController BeaterBarMotor;
 	
 	public void moveBeaterJoystick(Joystick operator_joystick)
 	{
-		if (Math.abs(operator_joystick.getY()) > 0.1)
+		if(operator_joystick.getZ()>=0.1)
 		{
-			BeaterBarMotor.set(operator_joystick.getY());//value still up for debate
-		}
-		else
-		{
-			BeaterBarMotor.set(0);
+			BeaterBarMotor.set(-0.5);//value should be tweaked
 		}
 	}
 	
-	public void moveBeaterButton(Joystick operator_joystick)
-	{
-		//TODO find out how many speeds they want, the crimeny buggers
-	}
+//	public void moveBeaterButton(Joystick operator_joystick)
+//	{
+//		//TODO find out how many speeds they want, the crimeny buggers
+//	}
 	
 	public void end(){
 		BeaterBarMotor.set(0);

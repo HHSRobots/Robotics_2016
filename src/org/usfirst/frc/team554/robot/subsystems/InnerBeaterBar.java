@@ -23,7 +23,7 @@ public class InnerBeaterBar extends Subsystem {
 	
 	public void moveBeater(Joystick operator_joystick)
 	{
-		moveBeaterButton(operator_joystick);
+		moveBeaterButtons(operator_joystick);
 	}
 	
 	public void moveBeaterButtons(Joystick operator_joystick)//If you are wondering why this is the way it is, This is the way Luke set it up. It should be by triggers and have three settings
@@ -32,7 +32,7 @@ public class InnerBeaterBar extends Subsystem {
 		//left shouldery button is slow mode
 		//right shouldery button is reverse (slow?)
 		//X should cancel
-		if(operator_joystick.getZ()>0.1)//should work with the trigger? Hopefully?
+		if(operator_joystick.getZ()<=-0.1)//should work with the trigger? Hopefully?
 		{
 			BeaterBarMotor.set(1);//value up for change
 		}
@@ -44,7 +44,7 @@ public class InnerBeaterBar extends Subsystem {
 		{
 			BeaterBarMotor.set(-0.5);
 		}
-		else if(operator_joystick.getRawButton(3))
+		else
 		{
 			BeaterBarMotor.set(0);
 		}
@@ -52,10 +52,10 @@ public class InnerBeaterBar extends Subsystem {
 	
 	
 	
-	public void moveBeaterButton(Joystick operator_joystick)
-	{
-		//TODO find out how many speeds they want, the crimeny buggers
-	}
+//	public void moveBeaterButton(Joystick operator_joystick)
+//	{
+//		//TODO find out how many speeds they want, the crimeny buggers
+//	}
 	
 	public void end(){
 		BeaterBarMotor.set(0);
