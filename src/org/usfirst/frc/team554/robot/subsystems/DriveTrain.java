@@ -3,7 +3,7 @@ package org.usfirst.frc.team554.robot.subsystems;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.Gyro;
+import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.SpeedController;
@@ -19,7 +19,7 @@ public class DriveTrain extends Subsystem {
     private SpeedController left_wheels, right_wheels;
     private RobotDrive drive;
     private Encoder left_encoder, right_encoder;
-    private Gyro gyro;
+    private AnalogGyro gyro;
     
     public DriveTrain(){
     	super();
@@ -32,7 +32,7 @@ public class DriveTrain extends Subsystem {
     	left_encoder.setDistancePerPulse(0.01745);
     	right_encoder.setDistancePerPulse(0.01745);
     	
-    	gyro = new Gyro(0);
+    	gyro = new AnalogGyro(0);
     }
     
     // Put methods for controlling this subsystem
@@ -60,7 +60,7 @@ public class DriveTrain extends Subsystem {
     	return (left_encoder.getDistance() + right_encoder.getDistance())/2;
     }
     
-    public Gyro getGyro(){
+    public AnalogGyro getGyro(){
     	return this.gyro;
     }
     
