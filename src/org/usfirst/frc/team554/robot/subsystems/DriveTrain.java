@@ -47,7 +47,13 @@ public class DriveTrain extends Subsystem {
     }
     
     public void drive(Joystick joystick_driver){
-    	drive.arcadeDrive(-joystick_driver.getY(),-joystick_driver.getZ()*3/4);
+    	double turn = -joystick_driver.getZ()*3/4;
+    	if (!joystick_driver.getRawButton(1))
+    	{
+    		turn=gyro.getRate();//instead of turn being dictated by the person, the turn should be the opposite how it's turning.
+    		//make sure that this actually ensures that it will turn the opposite way it's moving. It may spin uncontrollably without proper set up.
+    	}
+    	drive.arcadeDrive(-joystick_driver.getY(),turn);
     }
     
     
@@ -67,6 +73,6 @@ public class DriveTrain extends Subsystem {
     public void log() {
         SmartDashboard.putNumber("drive leftmove", left_encoder.getDistance());
         SmartDashboard.putNumber("drive rightmove", right_encoder.getDistance());
-        SmartDashboard.putNumber("drive distance", (left_encoder.getDistance() + right_encoder.getDistance())/2);
+        SmartDashboard.putNumber("drive distance", this.getDistance());
     }
 }
