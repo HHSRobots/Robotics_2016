@@ -31,7 +31,7 @@ public class InnerBeaterBar extends Subsystem {
 		//left trigger is fast mode for arm beater
 		//left shouldery button is slow mode
 		//right shouldery button is reverse (slow?)
-		//X should cancel
+		//if none are pressed it should cancel.
 		if(operator_joystick.getZ()<=-0.1&&!operator_joystick.getRawButton(5)&&!operator_joystick.getRawButton(6))//should work with the trigger? Hopefully?
 		{
 			BeaterBarMotor.set(1);//value up for change
