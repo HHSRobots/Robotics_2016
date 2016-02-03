@@ -1,7 +1,5 @@
 package org.usfirst.frc.team554.robot.subsystems;
-
 import org.usfirst.frc.team554.robot.commands.Arm_Move;
-
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.SpeedController;
@@ -17,7 +15,7 @@ public class Arm extends Subsystem {
 	
 	
 	// Backwards is spinning toward robot while forward is spinning away from robot
-	private double armUpperLimit, armLowerLimit;
+	private double armOuterLimit, armInnerLimit;
 	
 	
 	public Arm() {
@@ -33,8 +31,8 @@ public class Arm extends Subsystem {
     	armMotorLeftEncoder.setDistancePerPulse(1./256.); //SET
 		
 		
-		armUpperLimit = 0.0;
-		armLowerLimit = 1.0; /// This still needs to be set. 
+		armOuterLimit = 0.0;
+		armInnerLimit = 1.0; /// This still needs to be set. 
 		
 		
 	}
@@ -48,17 +46,19 @@ public class Arm extends Subsystem {
 	
 	public void armMove(Joystick stick){
 		// Remember! one of these motors will be negative. This must be fixed when updated.
-		if (Math.abs(stick.getZ()) > 0.1)
-		{
-			armMotorLeft.set(stick.getZ());//value still up for debate
-			armMotorRight.set(-stick.getZ());
-		}
-		
-		else
-		{
-			armMotorLeft.set(0);
-			armMotorRight.set(0);
-		}
+		SmartDashboard.putNumber("Throttle Value", stick.getThrottle());
+    	
+    	if (didHitInnerLimit() && stick.getThrottle() > 0.1 ){
+    		armMotorLeft.set(-stick.getThrottle());
+    		armMotorRight.set(stick.getThrottle());	
+    	}
+    	else if (didHitOuterLimit() && stick.getThrottle() < -0.1 ){
+    		armMotorLeft.set(-stick.getThrottle());
+    		armMotorRight.set(stick.getThrottle());
+    	}
+    	else {
+    		armStop();
+    	}
 		
 	}
 	public void resetEncoder(){
@@ -67,11 +67,11 @@ public class Arm extends Subsystem {
 	
     }
 	
-	public boolean didHitLowerLimit(){
-		return armMotorLeftEncoder.getDistance() >= armLowerLimit || armMotorRightEncoder.getDistance() >= armLowerLimit;
+	public boolean didHitInnerLimit(){
+		return armMotorLeftEncoder.getDistance() <= armInnerLimit || armMotorRightEncoder.getDistance() <= armInnerLimit;
 	}
-	public boolean didHitUpperLimit(){
-		return armMotorLeftEncoder.getDistance() <= armUpperLimit || armMotorRightEncoder.getDistance() <= armUpperLimit;
+	public boolean didHitOuterLimit(){
+		return armMotorLeftEncoder.getDistance() >= armOuterLimit || armMotorRightEncoder.getDistance() >= armOuterLimit;
 	}
 	
 	
@@ -79,12 +79,13 @@ public class Arm extends Subsystem {
 	
 	protected void initDefaultCommand() {
 		// TODO Auto-generated method stub
-		
 		setDefaultCommand( new Arm_Move());
+		
 	}
 	
 	public void log(){
-		SmartDashboard.putNumber("Current Percentage of Movement", (armMotorLeftEncoder.getDistance() / armLowerLimit) * 100  );
+		SmartDashboard.putNumber("Current Percentage of Movement", (armMotorLeftEncoder.getDistance() / armInnerLimit) * 100  );
+		
 		
 	}
 
