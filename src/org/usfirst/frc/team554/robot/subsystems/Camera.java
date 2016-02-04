@@ -1,7 +1,6 @@
 package org.usfirst.frc.team554.robot.subsystems;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import com.ni.vision.NIVision;
 //import com.ni.vision.NIVision.DrawMode;
@@ -20,7 +19,6 @@ public class Camera extends Subsystem {
     private Image frame;
     private CameraServer server;
     private boolean changeDone = false;
-    private int cameraMode=1;
     
     
     public Camera(){
@@ -53,19 +51,6 @@ public class Camera extends Subsystem {
 		NIVision.IMAQdxStopAcquisition(curCam);
 	}
 	
-	public void cameraToggle()
-	{//if problems, maybe try to keep cameras from switching when changeDone is false;
-		if(cameraMode==1)
-		{
-			cameraBack();
-			cameraMode=2;
-		}
-		else
-		{
-			cameraFront();
-			cameraMode=1;
-		}
-	}
  
 	
 	public void cameraFront(){
@@ -103,11 +88,6 @@ public class Camera extends Subsystem {
     
     public boolean cameraChangeComplete(){
     	return changeDone;
-    }
-    
-    public void log()
-    {
-    	SmartDashboard.putNumber("Which camera are we on ricky ticky tacky?", cameraMode);
     }
    
 }
