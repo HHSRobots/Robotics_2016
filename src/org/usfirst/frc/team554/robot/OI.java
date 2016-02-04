@@ -28,6 +28,7 @@ public class OI {
     Button button10 = new JoystickButton(driver_Joystick,10);
     public OI()
     {
+    	trigger.whenActive(new Camera_Toggle());
     	button7.whenActive(new EngageHighGear());
     	button8.whenActive(new EngageLowGear());
     }
