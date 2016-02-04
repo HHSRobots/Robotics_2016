@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Talon;
 
 import org.usfirst.frc.team554.robot.commands.DriveTrain_JoyStickDrive;
-
+import edu.wpi.first.wpilibj.Solenoid;
 
 /**
  *
@@ -20,6 +20,7 @@ public class DriveTrain extends Subsystem {
     private RobotDrive drive;
     private Encoder left_encoder, right_encoder;
     private AnalogGyro gyro;
+    private Solenoid gearShiftSolenoid;
     
     public DriveTrain(){
     	super();
@@ -28,6 +29,7 @@ public class DriveTrain extends Subsystem {
     	drive = new RobotDrive(left_wheels, right_wheels);
     	left_encoder = new Encoder(2,3);
     	right_encoder = new Encoder(4,5);
+    	gearShiftSolenoid = new Solenoid(0);//is this where it will go? who knows!!!!!!!!
     	
     	left_encoder.setDistancePerPulse(0.01745);
     	right_encoder.setDistancePerPulse(0.01745);
@@ -68,6 +70,16 @@ public class DriveTrain extends Subsystem {
     
     public AnalogGyro getGyro(){
     	return this.gyro;
+    }
+    
+    public void gearUp()
+    {
+    	gearShiftSolenoid.set(true);
+    }
+    
+    public void gearDown()
+    {
+    	gearShiftSolenoid.set(false);
     }
     
     public void log() {
