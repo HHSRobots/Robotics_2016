@@ -22,10 +22,11 @@ public class OI {
     Button button4 = new JoystickButton(driver_Joystick,4);
     Button button5 = new JoystickButton(driver_Joystick,5);
     Button button6 = new JoystickButton(driver_Joystick,6);
-    JoystickButton button7 = new JoystickButton(driver_Joystick,7);
-    JoystickButton button8 = new JoystickButton(driver_Joystick,8);
+    Button button7 = new JoystickButton(driver_Joystick,7);
+    Button button8 = new JoystickButton(driver_Joystick,8);
     Button button9 = new JoystickButton(driver_Joystick,9);
     Button button10 = new JoystickButton(driver_Joystick,10);
+    
     public OI()
     {
     	trigger.whenActive(new Camera_Toggle());

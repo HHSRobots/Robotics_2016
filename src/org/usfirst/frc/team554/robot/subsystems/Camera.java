@@ -58,12 +58,12 @@ public class Camera extends Subsystem {
 		if(cameraMode==1)
 		{
 			cameraBack();
-			cameraMode=2;
+			cameraMode= cameraMode * -1;
 		}
 		else
 		{
 			cameraFront();
-			cameraMode=1;
+			cameraMode= cameraMode * -1;
 		}
 	}
  
@@ -107,7 +107,7 @@ public class Camera extends Subsystem {
     
     public void log()
     {
-    	SmartDashboard.putNumber("Which camera are we on ricky ticky tacky?", cameraMode);
+    	SmartDashboard.putNumber("Current Camera", cameraMode);
     }
    
 }
