@@ -37,28 +37,29 @@ public class OI {
 
 
 	//Joysticks: Xbox One Controller( Operator)
+    //Fixed. minus the Trigger axis
     
-    //THIS STILL NEEDS TO BE FIXED!!!!!!!!!!!!!!!!!!!!!
     
-    
-	Joystick xBoxOneController = new Joystick(1);
-	Button L1 = new JoystickButton(xBoxOneController, 5);
-	Button L2 = new JoystickButton(xBoxOneController, 7);
-	Button R1 = new JoystickButton(xBoxOneController, 6);
-	Button R2 = new JoystickButton(xBoxOneController, 8);
-	Button Square = new JoystickButton(xBoxOneController, 1);
-	Button Cross = new JoystickButton(xBoxOneController, 2);
-	Button Circle = new JoystickButton(xBoxOneController, 3);
-    Button Triangle = new JoystickButton(xBoxOneController, 4);
-    Button LStickButton = new JoystickButton(xBoxOneController, 11);
-    Button RStickButton = new JoystickButton(xBoxOneController,12);
+	Joystick XboxOneController = new Joystick(1);
+	Button A = new JoystickButton(XboxOneController, 1);
+	Button B = new JoystickButton(XboxOneController, 2);
+	Button X = new JoystickButton(XboxOneController, 3);
+    Button Y = new JoystickButton(XboxOneController, 4);
+    Button LB = new JoystickButton(XboxOneController, 5);
+	Button RB = new JoystickButton(XboxOneController, 6);
+	
+	//Both of the triggers need to be set as their relative axis
+	Button LTrigger = new JoystickButton(XboxOneController, 7);
+	Button RTrigger = new JoystickButton(XboxOneController, 8);
+    Button LStickButton = new JoystickButton(XboxOneController, 9);
+    Button RStickButton = new JoystickButton(XboxOneController,10);
     
     
     
     
 
 	public Joystick getOperator(){
-		return xBoxOneController;
+		return XboxOneController;
 	}
 	
 	public Joystick getDriver(){
