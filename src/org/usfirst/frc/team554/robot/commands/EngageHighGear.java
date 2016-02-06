@@ -1,17 +1,18 @@
 package org.usfirst.frc.team554.robot.commands;
 
-import edu.wpi.first.wpilibj.command.Command;
-import org.usfirst.frc.team554.robot.Robot;
-import org.usfirst.frc.team554.robot.subsystems.*;
+import org.usfirst.frc.team554.robot.*;
 
+//import org.usfirst.frc.team554.robot.Robot;
+
+import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class BeaterBar_Beat extends Command {
+public class EngageHighGear extends Command {
 
-    public BeaterBar_Beat() {
-    	requires(Robot.beaterbar);
+    public EngageHighGear() {
+    	requires(Robot.drivetrain);
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     }
@@ -22,16 +23,16 @@ public class BeaterBar_Beat extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.beaterbar.moveBeater(Robot.oi.getOperator());
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return true;
     }
 
     // Called once after isFinished returns true
     protected void end() {
+    	Robot.drivetrain.gearUp();
     }
 
     // Called when another command which requires one or more of the same

@@ -1,6 +1,7 @@
 package org.usfirst.frc.team554.robot.subsystems;
-
+import org.usfirst.frc.team554.robot.commands.Arm_Move;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -10,31 +11,29 @@ public class Arm extends Subsystem {
 	private SpeedController armMotorLeft; 
 	private SpeedController armMotorRight;
 	private Encoder armMotorLeftEncoder, armMotorRightEncoder;
-	private boolean hasBeenReset;
 	
 	
 	
 	// Backwards is spinning toward robot while forward is spinning away from robot
-	private double armUpperLimit, armLowerLimit;
+	private double armOuterLimit, armInnerLimit;
 	
 	
 	public Arm() {
 		super();
 		
 		
-		armMotorLeft = new Talon(1); // THIS STILL NEEDS TO BE SET
-		armMotorRight = new Talon(2); // SET 
-		armMotorLeftEncoder = new Encoder(7,8); // SET
-		armMotorRightEncoder = new Encoder(9,10);// SET
+		armMotorLeft = new Talon(7); // THIS STILL NEEDS TO BE SET
+		armMotorRight = new Talon(6); // SET 
+		armMotorLeftEncoder = new Encoder(6,7); // SET
+		armMotorRightEncoder = new Encoder(8,9);// SET
 		
 		armMotorRightEncoder.setDistancePerPulse(1./256.); //SET
     	armMotorLeftEncoder.setDistancePerPulse(1./256.); //SET
 		
 		
-		armUpperLimit = 0.0;
-		armLowerLimit = 1.0; /// This still needs to be set. 
+		armOuterLimit = 0.0;
+		armInnerLimit = 1.0; /// This still needs to be set. 
 		
-		hasBeenReset = false;
 		
 	}
 	
@@ -45,28 +44,34 @@ public class Arm extends Subsystem {
     }
 	
 	
-	public void armMove(double speed){
+	public void armMove(Joystick stick){
 		// Remember! one of these motors will be negative. This must be fixed when updated.
-		boolean ifweHaventconfigedyet = true;
-		if( ifweHaventconfigedyet)
-			return;
-		armMotorLeft.set(speed);
-		armMotorRight.set(speed);
+		SmartDashboard.putNumber("Throttle Value", stick.getThrottle());
+    	
+    	if (didHitInnerLimit() && stick.getThrottle() > 0.1 ){
+    		armMotorLeft.set(-stick.getThrottle());
+    		armMotorRight.set(stick.getThrottle());	
+    	}
+    	else if (didHitOuterLimit() && stick.getThrottle() < -0.1 ){
+    		armMotorLeft.set(-stick.getThrottle());
+    		armMotorRight.set(stick.getThrottle());
+    	}
+    	else {
+    		armStop();
+    	}
 		
 	}
 	public void resetEncoder(){
-		if ( ! hasBeenReset){
 			armMotorLeftEncoder.reset();
 			armMotorRightEncoder.reset();
-			hasBeenReset = true;
-		}
+	
     }
 	
-	public boolean didHitLowerLimit(){
-		return armMotorLeftEncoder.getDistance() >= armLowerLimit || armMotorRightEncoder.getDistance() >= armLowerLimit;
+	public boolean didHitInnerLimit(){
+		return armMotorLeftEncoder.getDistance() <= armInnerLimit || armMotorRightEncoder.getDistance() <= armInnerLimit;
 	}
-	public boolean didHitUpperLimit(){
-		return armMotorLeftEncoder.getDistance() <= armUpperLimit || armMotorRightEncoder.getDistance() <= armUpperLimit;
+	public boolean didHitOuterLimit(){
+		return armMotorLeftEncoder.getDistance() >= armOuterLimit || armMotorRightEncoder.getDistance() >= armOuterLimit;
 	}
 	
 	
@@ -74,12 +79,13 @@ public class Arm extends Subsystem {
 	
 	protected void initDefaultCommand() {
 		// TODO Auto-generated method stub
-		
+		setDefaultCommand( new Arm_Move());
 		
 	}
 	
 	public void log(){
-		SmartDashboard.putNumber("Current Percentage of Movement", (armMotorLeftEncoder.getDistance() / armLowerLimit) * 100  );
+		SmartDashboard.putNumber("Current Percentage of Movement", (armMotorLeftEncoder.getDistance() / armInnerLimit) * 100  );
+		
 		
 	}
 

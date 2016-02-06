@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+
 import org.usfirst.frc.team554.robot.commands.ExampleCommand;
 import org.usfirst.frc.team554.robot.subsystems.*;
 
@@ -24,7 +25,8 @@ public class Robot extends IterativeRobot {
 	public static OI oi;
 	public static DriveTrain drivetrain;
 	public static Arm arm;
-	public static BeaterBar beaterbar;
+	public static InnerBeaterBar innerBeaterBar;
+	public static OuterBeaterBar outerBeaterBar;
 	public static Camera camera;
 	public static PDP PowerDistPanel;
 	public int AutoProgramNumber;
