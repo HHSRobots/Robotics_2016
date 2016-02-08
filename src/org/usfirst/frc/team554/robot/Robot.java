@@ -6,6 +6,8 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
+import org.usfirst.frc.team554.robot.commands.AutonomousProgram000;
+import org.usfirst.frc.team554.robot.commands.AutonomousProgram002;
 import org.usfirst.frc.team554.robot.commands.ExampleCommand;
 import org.usfirst.frc.team554.robot.subsystems.*;
 
@@ -29,6 +31,7 @@ public class Robot extends IterativeRobot {
 	public static OuterBeaterBar outerBeaterBar;
 	public static Camera camera;
 	public static PDP PowerDistPanel;
+	public static ThumbWheel twheel;
 	public int AutoProgramNumber;
 	public int CameraUpdate;
 	
@@ -73,21 +76,17 @@ public class Robot extends IterativeRobot {
 	 * or additional comparisons to the switch structure below with additional strings & commands.
 	 */
     public void autonomousInit() {
-        autonomousCommand = (Command) chooser.getSelected();
-        
-		/* String autoSelected = SmartDashboard.getString("Auto Selector", "Default");
-		switch(autoSelected) {
-		case "My Auto":
-			autonomousCommand = new MyAutoCommand();
-			break;
-		case "Default Auto":
-		default:
-			autonomousCommand = new ExampleCommand();
-			break;
-		} */
-    	
-    	// schedule the autonomous command (example)
-        if (autonomousCommand != null) autonomousCommand.start();
+    	AutoProgramNumber = twheel.getThumbWheelval();
+		switch (AutoProgramNumber) {
+			case 1: autonomousCommand =	new AutonomousProgram000();
+				break;
+			case 2: autonomousCommand = new AutonomousProgram002();
+		        break;
+		default: ;//do nothing
+		};
+    	//autonomousCommand = (Command) AutoChooser.getSelected();
+    	if (autonomousCommand != null) autonomousCommand.start();
+		
     }
 
     /**
