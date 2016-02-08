@@ -2,6 +2,7 @@ package org.usfirst.frc.team554.robot;
 import org.usfirst.frc.team554.robot.commands.*;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.Joystick.RumbleType;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
@@ -15,6 +16,7 @@ public class OI {
 
 
 	// Joystick: Logitech Controller( Driver)
+	
     Joystick driver_Joystick = new Joystick(0);
     Button trigger = new JoystickButton(driver_Joystick,1);
     Button missleButton = new JoystickButton(driver_Joystick,2);
@@ -27,16 +29,7 @@ public class OI {
     Button button9 = new JoystickButton(driver_Joystick,9);
     Button button10 = new JoystickButton(driver_Joystick,10);
     
-    public OI()
-    {
-    	trigger.whenActive(new Camera_Toggle());
-    	button7.whenActive(new EngageHighGear());
-    	button8.whenActive(new EngageLowGear());
-    }
-    
-
-
-	//Joysticks: Xbox One Controller( Operator)
+  //Joysticks: Xbox One Controller( Operator)
     //Fixed. minus the Trigger axis
     
     
@@ -54,6 +47,18 @@ public class OI {
     Button LStickButton = new JoystickButton(XboxOneController, 9);
     Button RStickButton = new JoystickButton(XboxOneController,10);
     
+    
+    public OI()
+    {
+    	trigger.whenPressed(new Camera_Toggle());
+    	button7.whenPressed(new EngageHighGear());
+    	button8.whenPressed(new EngageLowGear());
+    	
+    }
+    
+
+
+	
     
     
     
