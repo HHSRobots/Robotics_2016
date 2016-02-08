@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class Camera_Toggle extends Command {
 
     public Camera_Toggle() {
-    	requires(Robot.drivetrain);
+    	requires(Robot.camera);
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     }
@@ -22,11 +22,12 @@ public class Camera_Toggle extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	Robot.camera.cameraToggle();
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return true;
+        return  Robot.camera.cameraChangeComplete();
     }
 
     // Called once after isFinished returns true
