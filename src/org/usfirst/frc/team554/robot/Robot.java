@@ -43,7 +43,15 @@ public class Robot extends IterativeRobot {
      * used for any initialization code.
      */
     public void robotInit() {
-		oi = new OI();
+		
+    	driveTrain = new DriveTrain();
+    	arm = new Arm();
+    	pneumatics = new Pneumatics();
+    	beaterBars = new BeaterBars();
+    	camera = new Camera();
+    	powerDistPanel = new PDP();
+    	tWheel = new ThumbWheel();
+    	oi = new OI();
         
         
         arm.resetEncoder();
@@ -83,7 +91,7 @@ public class Robot extends IterativeRobot {
 		        break;
 		default: ;//do nothing
 		};
-    	//autonomousCommand = (Command) AutoChooser.getSelected();
+		
     	if (autonomousCommand != null) autonomousCommand.start();
 		
     }
@@ -96,14 +104,12 @@ public class Robot extends IterativeRobot {
     }
 
     public void teleopInit() {
-    	driveTrain.resetGyro();
 		// This makes sure that the autonomous stops running when
         // teleop starts running. If you want the autonomous to 
         // continue until interrupted by another command, remove
         // this line or comment it out.
         if (autonomousCommand != null) autonomousCommand.cancel();
-        
-        
+    	driveTrain.resetGyro();      
     }
     	
 
@@ -130,7 +136,5 @@ public class Robot extends IterativeRobot {
     	driveTrain.log();
     	tWheel.log();
     	powerDistPanel.log();
-    	
-    	
     }
 }

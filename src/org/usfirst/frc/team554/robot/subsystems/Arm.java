@@ -46,7 +46,7 @@ public class Arm extends Subsystem {
 	
 	public void armMove(Joystick stick){
 		// Remember! one of these motors will be negative. This must be fixed when updated.
-		SmartDashboard.putNumber("Throttle Value", stick.getThrottle());
+		//SmartDashboard.putNumber("Throttle Value", stick.getThrottle());
     	
     	if (didHitInnerLimit() && stick.getThrottle() > 0.1 ){
     		armMotorLeft.set(-stick.getThrottle());
