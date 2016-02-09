@@ -14,9 +14,6 @@ public class Arm_Move extends Command {
         // eg. requires(chassis);
     }
     
-    //You will have a bad time...
-    
-    
     // Called just before this Command runs the first time
     protected void initialize() {
     }
