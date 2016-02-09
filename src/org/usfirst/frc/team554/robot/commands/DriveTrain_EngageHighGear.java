@@ -1,16 +1,18 @@
 package org.usfirst.frc.team554.robot.commands;
 
-import org.usfirst.frc.team554.robot.Robot;
+import org.usfirst.frc.team554.robot.*;
 
-import edu.wpi.first.wpilibj.command.*;
+//import org.usfirst.frc.team554.robot.Robot;
+
+import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class EngageLowGear extends Command {
+public class DriveTrain_EngageHighGear extends Command {
 
-    public EngageLowGear() {
-    	requires(Robot.drivetrain);
+    public DriveTrain_EngageHighGear() {
+    	requires(Robot.driveTrain);
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     }
@@ -30,7 +32,7 @@ public class EngageLowGear extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.drivetrain.gearDown();
+    	Robot.driveTrain.gearUp();
     }
 
     // Called when another command which requires one or more of the same

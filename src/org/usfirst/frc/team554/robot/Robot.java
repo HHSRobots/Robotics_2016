@@ -6,6 +6,8 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
+import org.usfirst.frc.team554.robot.commands.AutonomousProgram001;
+import org.usfirst.frc.team554.robot.commands.AutonomousProgram002;
 import org.usfirst.frc.team554.robot.commands.ExampleCommand;
 import org.usfirst.frc.team554.robot.subsystems.*;
 
@@ -23,18 +25,18 @@ public class Robot extends IterativeRobot {
 
 	// public static final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
 	public static OI oi;
-	public static DriveTrain drivetrain;
+	public static DriveTrain driveTrain;
 	public static Arm arm;
-	public static InnerBeaterBar innerBeaterBar;
-	public static OuterBeaterBar outerBeaterBar;
+	public static Pneumatics pneumatics;
+	public static BeaterBars beaterBars;
 	public static Camera camera;
-	public static PDP PowerDistPanel;
-	public int AutoProgramNumber;
-	public int CameraUpdate;
+	public static PDP powerDistPanel;
+	public static ThumbWheel tWheel;
+	public int autoProgramNumber;
+	public int cameraUpdate;
 	
 	
     Command autonomousCommand;
-    SendableChooser chooser;
 
     /**
      * This function is run when the robot is first started up and should be
@@ -42,12 +44,12 @@ public class Robot extends IterativeRobot {
      */
     public void robotInit() {
 		oi = new OI();
-        chooser = new SendableChooser();
-        chooser.addDefault("Default Auto", new ExampleCommand());
-//        chooser.addObject("My Auto", new MyAutoCommand());
-        SmartDashboard.putData("Auto mode", chooser);
+        
         
         arm.resetEncoder();
+        driveTrain.resetEncoder();
+        driveTrain.resetGyro();
+        
     }
 	
 	/**
@@ -73,21 +75,17 @@ public class Robot extends IterativeRobot {
 	 * or additional comparisons to the switch structure below with additional strings & commands.
 	 */
     public void autonomousInit() {
-        autonomousCommand = (Command) chooser.getSelected();
-        
-		/* String autoSelected = SmartDashboard.getString("Auto Selector", "Default");
-		switch(autoSelected) {
-		case "My Auto":
-			autonomousCommand = new MyAutoCommand();
-			break;
-		case "Default Auto":
-		default:
-			autonomousCommand = new ExampleCommand();
-			break;
-		} */
-    	
-    	// schedule the autonomous command (example)
-        if (autonomousCommand != null) autonomousCommand.start();
+    	autoProgramNumber = tWheel.getThumbWheelval();
+		switch (autoProgramNumber) {
+			case 1: autonomousCommand =	new AutonomousProgram001();
+				break;
+			case 2: autonomousCommand = new AutonomousProgram002();
+		        break;
+		default: ;//do nothing
+		};
+    	//autonomousCommand = (Command) AutoChooser.getSelected();
+    	if (autonomousCommand != null) autonomousCommand.start();
+		
     }
 
     /**
@@ -98,18 +96,24 @@ public class Robot extends IterativeRobot {
     }
 
     public void teleopInit() {
+    	driveTrain.resetGyro();
 		// This makes sure that the autonomous stops running when
         // teleop starts running. If you want the autonomous to 
         // continue until interrupted by another command, remove
         // this line or comment it out.
         if (autonomousCommand != null) autonomousCommand.cancel();
+        
+        
     }
+    	
 
     /**
      * This function is called periodically during operator control
      */
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
+        camera.updateCam();
+        log();
     }
     
     /**
@@ -117,5 +121,16 @@ public class Robot extends IterativeRobot {
      */
     public void testPeriodic() {
         LiveWindow.run();
+    }
+    
+    
+    public void log(){
+    	arm.log();
+    	beaterBars.log();
+    	driveTrain.log();
+    	tWheel.log();
+    	powerDistPanel.log();
+    	
+    	
     }
 }
