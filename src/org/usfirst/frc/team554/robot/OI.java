@@ -51,8 +51,11 @@ public class OI {
     public OI()
     {
     	trigger.whenPressed(new Camera_Toggle());
-    	button7.whenPressed(new EngageHighGear());
-    	button8.whenPressed(new EngageLowGear());
+    	button7.whenPressed(new DriveTrain_EngageHighGear());
+    	button8.whenPressed(new DriveTrain_EngageLowGear());
+    	LB.whenActive(new BeaterBars_Pass());
+    	
+    	
     	
     }
     

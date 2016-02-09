@@ -75,6 +75,13 @@ public class Arm extends Subsystem {
 	}
 	
 	
+	public double getLeftEncoderDistance(){
+		return armMotorLeftEncoder.getDistance();
+	}
+	public double getRightEncoderDistance(){
+		return armMotorRightEncoder.getDistance();
+	}
+	
 	
 	
 	protected void initDefaultCommand() {
@@ -83,9 +90,12 @@ public class Arm extends Subsystem {
 		
 	}
 	
+	
 	public void log(){
-		SmartDashboard.putNumber("Current Percentage of Movement", (armMotorLeftEncoder.getDistance() / armInnerLimit) * 100  );
 		
+		SmartDashboard.putNumber("Current Percentage of Movement", (armMotorLeftEncoder.getDistance() / armInnerLimit) * 100  );
+		SmartDashboard.putNumber("Right Encoder Distance", getRightEncoderDistance());
+		SmartDashboard.putNumber("Left Encoder Distance", getLeftEncoderDistance());
 		
 	}
 
