@@ -73,12 +73,16 @@ public class DriveTrain extends Subsystem {
     }
     
     
-    public void reset(){
+    public void resetEncoder(){
     	left_encoder.reset();
     	right_encoder.reset();
     }
+    public void resetGyro(){
+    	gyro.reset();
+    }
     
     public double getDistance(){
+    	
     	return (left_encoder.getDistance() + right_encoder.getDistance())/2;
     }
     
@@ -100,5 +104,8 @@ public class DriveTrain extends Subsystem {
         SmartDashboard.putNumber("drive leftmove", left_encoder.getDistance());
         SmartDashboard.putNumber("drive rightmove", right_encoder.getDistance());
         SmartDashboard.putNumber("drive distance", this.getDistance());
+        SmartDashboard.putBoolean("Top Gear", gearShiftSolenoid.get());
+        SmartDashboard.putNumber("Gyro Rate", gyro.getRate());
+        
     }
 }
