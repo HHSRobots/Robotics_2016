@@ -48,6 +48,8 @@ public class Robot extends IterativeRobot {
 		pref = Preferences.getInstance();
     	driveTrain = new DriveTrain();
     	arm = new Arm();
+    	arm.setInnerLimit(pref.getDouble("inner limit", 0));//unknown value
+    	arm.setOuterLimit(pref.getDouble("outer limit", 0.2));//unknown value
     	pneumatics = new Pneumatics();
     	beaterBars = new BeaterBars();
     	camera = new Camera();
