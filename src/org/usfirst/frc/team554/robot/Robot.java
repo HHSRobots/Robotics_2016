@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.Preferences;
 
 import org.usfirst.frc.team554.robot.commands.AutonomousProgram001;
 import org.usfirst.frc.team554.robot.commands.AutonomousProgram002;
@@ -34,6 +35,7 @@ public class Robot extends IterativeRobot {
 	public static ThumbWheel tWheel;
 	public int autoProgramNumber;
 	public int cameraUpdate;
+	private Preferences pref;
 	
 	
     Command autonomousCommand;
@@ -43,7 +45,7 @@ public class Robot extends IterativeRobot {
      * used for any initialization code.
      */
     public void robotInit() {
-		
+		pref = Preferences.getInstance();
     	driveTrain = new DriveTrain();
     	arm = new Arm();
     	pneumatics = new Pneumatics();
