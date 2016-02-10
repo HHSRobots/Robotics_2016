@@ -124,7 +124,6 @@ public class Arm extends Subsystem {
 		armInnerLimit = limit;
 	}
 	
-	
 	public void log(){
 		
 		SmartDashboard.putNumber("Current Percentage of Movement", (armMotorLeftEncoder.getDistance() / armInnerLimit) * 100  );
