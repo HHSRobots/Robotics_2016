@@ -22,13 +22,13 @@ public class Arm extends Subsystem {
 		super();
 		
 		
-		armMotorLeft = new Talon(7); // THIS STILL NEEDS TO BE SET
-		armMotorRight = new Talon(6); // SET 
-		armMotorLeftEncoder = new Encoder(6,7); // SET
-		armMotorRightEncoder = new Encoder(8,9);// SET
+		armMotorLeft = new Talon(7); 
+		armMotorRight = new Talon(6); 
+		armMotorLeftEncoder = new Encoder(6,7);
+		armMotorRightEncoder = new Encoder(8,9);
 		
-		armMotorRightEncoder.setDistancePerPulse(1./256.); //SET
-    	armMotorLeftEncoder.setDistancePerPulse(1./256.); //SET
+		armMotorRightEncoder.setDistancePerPulse(1./256.); 
+    	armMotorLeftEncoder.setDistancePerPulse(1./256.); 
 		
 		
 		armOuterLimit = 0.0;
@@ -93,7 +93,7 @@ public class Arm extends Subsystem {
 	}
 	
 	public boolean armIsAtDistance(double distance){
-		return Math.abs(getRightEncoderDistance() - distance) <= .1 ? true:false ;
+		return getRightEncoderDistance() == distance;
 	}
 	
 	
@@ -108,6 +108,7 @@ public class Arm extends Subsystem {
 		else{
 			speed = 0;
 		}
+		
 		moveArmAtSpeed(speed);
 	}
 	
