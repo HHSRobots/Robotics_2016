@@ -76,9 +76,11 @@ public class Arm extends Subsystem {
 	
 	
 	public double getLeftEncoderDistance(){
+		// Will return negative
 		return armMotorLeftEncoder.getDistance();
 	}
 	public double getRightEncoderDistance(){
+		// will retun positive
 		return armMotorRightEncoder.getDistance();
 	}
 	
@@ -88,6 +90,38 @@ public class Arm extends Subsystem {
 		// TODO Auto-generated method stub
 		setDefaultCommand( new Arm_Move());
 		
+	}
+	
+	public boolean armIsAtDistance(double distance){
+		return Math.abs(getRightEncoderDistance() - distance) <= .1 ? true:false ;
+	}
+	
+	
+	public void moveArmToDistance(double distance){
+		double speed;
+		if (getRightEncoderDistance() < distance){
+			speed = 1;
+		}
+		else if (getRightEncoderDistance() > distance){
+			speed = -1;
+		}
+		else{
+			speed = 0;
+		}
+		moveArmAtSpeed(speed);
+	}
+	
+	
+	public void moveArmAtSpeed(double speed){
+		armMotorLeft.set(-speed);
+		armMotorRight.set(speed);
+	}
+	
+	public void setOuterLimit(double limit){
+		armOuterLimit = limit;
+	}
+	public void setInnerLimit(double limit){
+		armInnerLimit = limit;
 	}
 	
 	
