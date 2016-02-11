@@ -11,12 +11,14 @@ public class DriveTrain_ToDistance extends Command {
 	private double MoveDistance;
 	private double MoveSpeed;
 	private double CurrentDistance;
+	private final double initialDistance; //This is used for an eventual rework of the isFinished method
 
     public DriveTrain_ToDistance(double MoveDistance,double MoveSpeed) {
         // Use requires() here to declare subsystem dependencies
         requires(Robot.driveTrain);
         this.MoveDistance = MoveDistance;
         this.MoveSpeed = MoveSpeed;
+        initialDistance = Robot.driveTrain.getDistance();
     }
 
     // Called just before this Command runs the first time
