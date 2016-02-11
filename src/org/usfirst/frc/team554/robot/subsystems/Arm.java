@@ -24,8 +24,23 @@ public class Arm extends Subsystem {
 		
 		armMotorLeft = new Talon(7); 
 		armMotorRight = new Talon(6); 
+		
+		// according to andymark.com, http://www.andymark.com/Gearmotor-p/am-2924.htm , because the encoder is on the back
+		// 		of the motor, the encoder will return opposite what it is expected to. They recommend flipping it in hardware
+		// 		which Luke (from the wiring diagram) said they are currently not, or they should be flipped in software.
+		// 		so we could just switch the order that they are initialized in like new Encoder(7,6) instead.
+		
 		armMotorLeftEncoder = new Encoder(6,7);
 		armMotorRightEncoder = new Encoder(8,9);
+		
+		// total circumfrance of the tip of the arm is 94.2477796 in
+		//total pulses per rev is 1316
+		//the arm can move about 200 deg 
+		
+		
+		// distance per pulse could be .07161685 in.( distance the tip of the arm moves) with a max of about 52.3598776 in
+		//							 or 1 pulse with a max of about 730
+		// 							 or .27355623 degrees with a max of about 200 deg
 		
 		armMotorRightEncoder.setDistancePerPulse(1./256.); 
     	armMotorLeftEncoder.setDistancePerPulse(1./256.); 
