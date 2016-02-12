@@ -51,7 +51,7 @@ public class Robot extends IterativeRobot {
     	arm.setInnerLimit(pref.getDouble("inner limit", 0));//unknown value
     	arm.setOuterLimit(pref.getDouble("outer limit", 0.2));//unknown value
     	pneumatics = new Pneumatics();
-    	beaterBars = new BeaterBars();
+    	beaterBars = new BeaterBars(this);
     	camera = new Camera();
     	powerDistPanel = new PDP();
     	tWheel = new ThumbWheel();
@@ -62,6 +62,11 @@ public class Robot extends IterativeRobot {
         driveTrain.resetEncoder();
         driveTrain.resetGyro();
         
+    }
+    
+    public Arm getArm()
+    {
+    	return arm;
     }
 	
 	/**
