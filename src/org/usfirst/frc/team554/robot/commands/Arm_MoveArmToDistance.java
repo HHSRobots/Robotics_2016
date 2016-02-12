@@ -7,14 +7,21 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class Arm_MoveArmToDifference extends Command {
+public class Arm_MoveArmToDistance extends Command {
 
 	protected double distance;
-    public Arm_MoveArmToDifference(double d) {
-    	distance = d;
+	private double speed;
+    public Arm_MoveArmToDistance(double pulsesToMove) {
+    	distance = pulsesToMove;
     	requires(Robot.arm);
+    	speed = ((distance - Robot.arm.getRightEncoderDistance()) > 0) ? 1 : -1;
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
+    }
+    public Arm_MoveArmToDistance(double pulsesToMove, double geschwindigkeit){
+    	requires(Robot.arm);
+    	distance = pulsesToMove;
+    	speed = geschwindigkeit;
     }
 
     // Called just before this Command runs the first time
@@ -23,7 +30,7 @@ public class Arm_MoveArmToDifference extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.arm.moveArmToDistance(distance);
+    	Robot.arm.moveArmAtSpeed(speed);
     }
 
     // Make this return true when this Command no longer needs to run execute()

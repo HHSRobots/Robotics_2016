@@ -1,14 +1,24 @@
 package org.usfirst.frc.team554.robot.commands;
 
+import org.usfirst.frc.team554.robot.Robot;
+
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
  *
  */
+//                   												Portcullis
+
 public class AutonomousProgram002 extends CommandGroup {
 	
 	int select = 1;
     public  AutonomousProgram002() {
+    	
+    	addParallel(new Arm_MoveArmToDistance(Robot.arm.getOuterLimit())); // move arm to floor
+    	addSequential(new DriveTrain_ToDistance(20,.6));// drive to place arm under portcullis
+    	addParallel(new DriveTrain_ToDistance(5,.6)); // start moving robot forward
+    	addSequential(new Arm_MoveArmToDistance(545, .6 )); // raise arm to life portcullis gate
+    	addSequential(new DriveTrain_ToDistance(20,1));// robot books it and makes it through portcullis
     	
     	
     	//
