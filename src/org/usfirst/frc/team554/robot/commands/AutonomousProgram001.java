@@ -15,7 +15,23 @@ public class AutonomousProgram001 extends CommandGroup {
     	
     	addSequential(new DriveTrain_ToDistance(20,.6));//// This must be changed according to the distance one must travel to cross the low bar
     	
-    	addSequential(new DriveTrain_ToDistance(-1,-.6)); // This moves the robot back ****The negative value might not be correct****
-    	//This is a note for Jeremy... Pudding
+    	addSequential(new DriveTrain_ToDistance(1,-.6)); // This should move the robot backward ****The negative value might not be correct****
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	//This is a note for Jeremy... Pudding made of Pudding!!!!!
     }
 }
