@@ -50,6 +50,10 @@ private SpeedController InnerBeaterBarMotor;
 		InnerBeaterBarMotor.set(-0.5);
 	}
 	
+	
+	//This is for passing and shooting. We are going to be automating the arm movement (somewhat)
+	//If the beater bar is too low we are going to move it up to a distance that allows the ball to be shot without having interference from the beaterbars
+	
 	public void beaterShoot(){
 		OuterBeaterBarMotor.set(0);
 		InnerBeaterBarMotor.set(1);
