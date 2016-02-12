@@ -1,5 +1,6 @@
 package org.usfirst.frc.team554.robot.subsystems;
 
+import org.usfirst.frc.team554.robot.Robot;
 import org.usfirst.frc.team554.robot.commands.BeaterBars_CollectAndShoot;
 
 import edu.wpi.first.wpilibj.Joystick;
@@ -18,11 +19,13 @@ public class BeaterBars extends Subsystem {
     
 private SpeedController OuterBeaterBarMotor;
 private SpeedController InnerBeaterBarMotor;
+private Robot robot;
 	
-	public BeaterBars(){
+	public BeaterBars(Robot r){
 		super();
 		OuterBeaterBarMotor = new Talon(5);
 		InnerBeaterBarMotor = new Talon(4);
+		robot=r;
 	}
 	
 	
@@ -35,8 +38,16 @@ private SpeedController InnerBeaterBarMotor;
 			beaterCollect();
 			
 		}
-		else if ( operator_joystick.getZ() <= -0.1 ){
-			beaterShoot();
+		else if ( operator_joystick.getZ() <= -0.1){
+			if(robot.getArm().isShootable())
+			{
+				beaterShoot();
+			}
+			else
+			{
+				robot.getArm().moveArmToDistance(robot.getArm().getShootableLimit());//maybe this will work? Crossed fingers I guess
+				stop();
+			}
 		}
 		
 		else {
@@ -60,7 +71,15 @@ private SpeedController InnerBeaterBarMotor;
 	}
 	public void beaterPass(){
 		OuterBeaterBarMotor.set(0);
-		InnerBeaterBarMotor.set(0.5);
+		if(robot.getArm().isShootable())
+		{
+			InnerBeaterBarMotor.set(0.5);
+		}
+		else
+		{
+			robot.getArm().moveArmAtSpeed(1);
+		}
+		
 	}
 	
 	

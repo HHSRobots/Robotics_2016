@@ -15,7 +15,7 @@ public class Arm extends Subsystem {
 	
 	
 	// Backwards is spinning toward robot while forward is spinning away from robot
-	private double armOuterLimit, armInnerLimit;
+	private double armOuterLimit, armInnerLimit, armShootableLimit;
 	
 	
 	public Arm() {
@@ -47,6 +47,7 @@ public class Arm extends Subsystem {
 		
 		
 		armOuterLimit = 0.0;
+		armShootableLimit = 0.5; // distance needes to be measured and set. 
 		armInnerLimit = 1.0; /// This still needs to be set. 
 		
 		
@@ -88,6 +89,10 @@ public class Arm extends Subsystem {
 	public boolean didHitOuterLimit(){
 		return armMotorLeftEncoder.getDistance() >= armOuterLimit || armMotorRightEncoder.getDistance() >= armOuterLimit;
 	}
+	public boolean isShootable()
+	{
+		return this.getRightEncoderDistance() >= armShootableLimit;
+	}
 	
 	
 	public double getLeftEncoderDistance(){
@@ -98,7 +103,14 @@ public class Arm extends Subsystem {
 		// will retun positive
 		return armMotorRightEncoder.getDistance();
 	}
-	
+	public double getOuterLimit()
+	{
+		return armOuterLimit;
+	}
+	public double getShootableLimit()
+	{
+		return armShootableLimit;
+	}
 	
 	
 	protected void initDefaultCommand() {
@@ -138,6 +150,10 @@ public class Arm extends Subsystem {
 	}
 	public void setInnerLimit(double limit){
 		armInnerLimit = limit;
+	}
+	public void setShootableLimit(double limit)
+	{
+		armShootableLimit = limit;
 	}
 	
 	public void log(){
