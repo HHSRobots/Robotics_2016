@@ -15,6 +15,12 @@ import org.usfirst.frc.team554.robot.subsystems.*;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+/*
+ * FYI These are the current encoder distances (in) per pulse: 
+ * 1) (7.75*pi)/360 * 18/36 = 0.03381575426
+ * 2) (7.75*pi)/256 * 18/36 = 0.04755340442
+ */
+
 /**
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the IterativeRobot
