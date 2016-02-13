@@ -54,7 +54,7 @@ public class DriveTrain extends Subsystem {
     	double z; // amount of rotation applied to robot -128 through 128, 0 is none
     	double Kp = 0.025; // constant that gives magnitude of rotation correction (recomended is 0.03)
     	
-    	if (joystick_driver.getRawButton(12) == true ){	
+    	if (joystick_driver.getRawButton(2) == true ){	
     		z =-joystick_driver.getZ();
     		wasHeld = true;
     	} else if (wasHeld && Math.abs(gyro.getRate()) <= 1.0 ){
