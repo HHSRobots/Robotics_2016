@@ -2,7 +2,6 @@ package org.usfirst.frc.team554.robot;
 import org.usfirst.frc.team554.robot.commands.*;
 
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.Joystick.RumbleType;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 

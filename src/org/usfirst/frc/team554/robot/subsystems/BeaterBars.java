@@ -1,8 +1,6 @@
 package org.usfirst.frc.team554.robot.subsystems;
 
-import org.usfirst.frc.team554.robot.Robot;
 import org.usfirst.frc.team554.robot.commands.BeaterBars_CollectAndShoot;
-
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Talon;
@@ -19,17 +17,25 @@ public class BeaterBars extends Subsystem {
     
 private SpeedController OuterBeaterBarMotor;
 private SpeedController InnerBeaterBarMotor;
-private Robot robot;
+private double collectMotorSpeed, shootMotorSpeed, passMotorSpeed;
 	
-	public BeaterBars(Robot r){
+	public BeaterBars(){
 		super();
 		OuterBeaterBarMotor = new Talon(5);
 		InnerBeaterBarMotor = new Talon(4);
-		robot=r;
 	}
 	
 	
 	
+	public void setCollectMotorSpeed(double limit){
+		collectMotorSpeed = limit;
+	}
+	public void setShootMotorSpeed(double limit){
+		shootMotorSpeed = limit;
+	}
+	public void setPassMotorSpeed(double limit){
+		passMotorSpeed = limit;
+	}
 	
 	public void moveBeaterJoystick(Joystick operator_joystick)
 	{
@@ -39,15 +45,20 @@ private Robot robot;
 			
 		}
 		else if ( operator_joystick.getZ() <= -0.1){
-			if(robot.getArm().isShootable())
+			beaterShoot();
+			
+			//TODO Check code/ limits for arm.isShootable before implementing.
+			/*
+			if(Robot.arm.isShootable())
 			{
 				beaterShoot();
 			}
 			else
 			{
-				robot.getArm().moveArmToDistance(robot.getArm().getShootableLimit());//maybe this will work? Crossed fingers I guess
+				Robot.arm.moveArmToDistance(Robot.arm.getShootableLimit());//maybe this will work? Crossed fingers I guess
 				stop();
 			}
+			*/
 		}
 		
 		else {
@@ -57,8 +68,8 @@ private Robot robot;
 	
 	public void beaterCollect(){
 		
-		OuterBeaterBarMotor.set(-0.5);
-		InnerBeaterBarMotor.set(-0.5);
+		OuterBeaterBarMotor.set(collectMotorSpeed);
+		InnerBeaterBarMotor.set(collectMotorSpeed);
 	}
 	
 	
@@ -67,27 +78,28 @@ private Robot robot;
 	
 	public void beaterShoot(){
 		OuterBeaterBarMotor.set(0);
-		InnerBeaterBarMotor.set(1);
+		InnerBeaterBarMotor.set(shootMotorSpeed);
 	}
 	public void beaterPass(){
 		OuterBeaterBarMotor.set(0);
-		if(robot.getArm().isShootable())
+		InnerBeaterBarMotor.set(passMotorSpeed);
+		//TODO This will not work as written below. fix before running
+		/*
+		if(Robot.arm.isShootable())
 		{
 			InnerBeaterBarMotor.set(0.5);
 		}
 		else
 		{
-			robot.getArm().moveArmAtSpeed(1);
+			
+			Robot.arm.moveArmAtSpeed(1);
 		}
+		*/
 		
 	}
 	
 	
-//	public void moveBeaterButton(Joystick operator_joystick)
-//	{
-//		//TODO find out how many speeds they want, the crimeny buggers
-//	}
-	
+
 	public void stop(){
 		OuterBeaterBarMotor.set(0);
 		InnerBeaterBarMotor.set(0);
@@ -103,7 +115,8 @@ private Robot robot;
     }
     
     public void log(){
-    	SmartDashboard.putNumber("Speed",10000);
+    	SmartDashboard.putNumber("InnerBeaterBarMotor",InnerBeaterBarMotor.get());
+    	SmartDashboard.putNumber("OuterBeaterBarMotor",OuterBeaterBarMotor.get());
     }
 }
 

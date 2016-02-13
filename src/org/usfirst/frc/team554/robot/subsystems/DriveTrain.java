@@ -7,7 +7,6 @@ import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.SpeedController;
-import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.VictorSP;
 
 import org.usfirst.frc.team554.robot.commands.DriveTrain_JoyStickDrive;
@@ -31,7 +30,7 @@ public class DriveTrain extends Subsystem {
     	drive = new RobotDrive(left_wheels, right_wheels);
     	left_encoder = new Encoder(2,3);
     	right_encoder = new Encoder(4,5);
-    	gearShiftSolenoid = new Solenoid(0);//is this where it will go? who knows!!!!!!!!
+    	gearShiftSolenoid = new Solenoid(0);
     	
     	left_encoder.setDistancePerPulse(0.01745);
     	right_encoder.setDistancePerPulse(0.01745);
@@ -58,7 +57,7 @@ public class DriveTrain extends Subsystem {
     	if (joystick_driver.getRawButton(12) == true ){	
     		z =-joystick_driver.getZ();
     		wasHeld = true;
-    	} else if (wasHeld && Math.abs(gyro.getRate()) <= 1 ){
+    	} else if (wasHeld && Math.abs(gyro.getRate()) <= 1.0 ){
     		gyro.reset();
     		wasHeld = false;
     		double angle = gyro.getAngle();

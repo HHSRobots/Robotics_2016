@@ -44,12 +44,7 @@ public class Arm extends Subsystem {
 		
 		armMotorRightEncoder.setDistancePerPulse(1./256.); 
     	armMotorLeftEncoder.setDistancePerPulse(1./256.); 
-		
-		
-		armOuterLimit = 0.0;
-		armShootableLimit = 0.5; // distance needes to be measured and set. 
-		armInnerLimit = 1.0; /// This still needs to be set. 
-		
+	
 		
 	}
 	
@@ -64,11 +59,11 @@ public class Arm extends Subsystem {
 		// Remember! one of these motors will be negative. This must be fixed when updated.
 		//SmartDashboard.putNumber("Throttle Value", stick.getThrottle());
     	
-    	if (didHitInnerLimit() && stick.getThrottle() > 0.1 ){
+    	if (didHitInnerLimit() && (stick.getThrottle() > 0.1) ){
     		armMotorLeft.set(-stick.getThrottle());
     		armMotorRight.set(stick.getThrottle());	
     	}
-    	else if (didHitOuterLimit() && stick.getThrottle() < -0.1 ){
+    	else if (didHitOuterLimit() && (stick.getThrottle() < -0.1) ){
     		armMotorLeft.set(-stick.getThrottle());
     		armMotorRight.set(stick.getThrottle());
     	}
@@ -91,7 +86,7 @@ public class Arm extends Subsystem {
 	}
 	public boolean isShootable()
 	{
-		return this.getRightEncoderDistance() >= armShootableLimit;
+		return (getRightEncoderDistance() <= armShootableLimit) && (getLeftEncoderDistance() <= armShootableLimit);
 	}
 	
 	
@@ -124,16 +119,15 @@ public class Arm extends Subsystem {
 	}
 	
 	
-	public void moveArmToDistance(double distance){
-		double speed;
-		if (getRightEncoderDistance() < distance){
-			speed = 1;
+	public void moveArmToDistance(double distance, double speed){
+		if (getRightEncoderDistance() <= distance && !didHitOuterLimit()){
+			speed = 0.5;
 		}
-		else if (getRightEncoderDistance() > distance){
-			speed = -1;
+		else if (getRightEncoderDistance() >= distance && !didHitInnerLimit()){
+			speed = -0.5;
 		}
 		else{
-			speed = 0;
+			speed = 0.0;
 		}
 		
 		moveArmAtSpeed(speed);
