@@ -3,7 +3,6 @@ package org.usfirst.frc.team554.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-import org.usfirst.frc.team554.robot.Robot;
 
 /**
  *

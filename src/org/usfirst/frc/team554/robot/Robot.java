@@ -70,6 +70,7 @@ public class Robot extends IterativeRobot {
         driveTrain.resetGyro();
         pneumatics.start();
         driveTrain.gearUp();
+        camera.cameraFront();
     }
     
 	/**

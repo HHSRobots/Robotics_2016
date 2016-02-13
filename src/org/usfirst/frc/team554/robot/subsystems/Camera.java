@@ -29,7 +29,7 @@ public class Camera extends Subsystem {
     	//TODO Set camera ids 'cam0', found on roborio web interface
     	
     	camFront = NIVision.IMAQdxOpenCamera("cam0", NIVision.IMAQdxCameraControlMode.CameraControlModeController);
-        camBack = NIVision.IMAQdxOpenCamera("cam1", NIVision.IMAQdxCameraControlMode.CameraControlModeController);
+        //camBack = NIVision.IMAQdxOpenCamera("cam1", NIVision.IMAQdxCameraControlMode.CameraControlModeController);
         curCam = camFront;
         
         // Img that will contain camera img
