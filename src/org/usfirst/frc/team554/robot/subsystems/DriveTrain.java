@@ -32,6 +32,8 @@ public class DriveTrain extends Subsystem {
     	right_encoder = new Encoder(4,5);
     	gearShiftSolenoid = new Solenoid(0);
     	
+    	drive.setSafetyEnabled(false);
+    	
     	left_encoder.setDistancePerPulse(0.01745);
     	right_encoder.setDistancePerPulse(0.01745);
     	
@@ -47,15 +49,16 @@ public class DriveTrain extends Subsystem {
     }
     
     public void drivemanual(double left, double right){
-    	drive.tankDrive(left,right);
+    	left_wheels.set(left);
+    	right_wheels.set(right);
     }
     
     public void drive(Joystick joystick_driver){
     	double z; // amount of rotation applied to robot -128 through 128, 0 is none
-    	double Kp = 0.025; // constant that gives magnitude of rotation correction (recomended is 0.03)
+    	double Kp = -0.025; // constant that gives magnitude of rotation correction (recomended is 0.03)
     	
     	if (joystick_driver.getRawButton(2) == true ){	
-    		z =-joystick_driver.getZ();
+    		z = joystick_driver.getZ();
     		wasHeld = true;
     	} else if (wasHeld && Math.abs(gyro.getRate()) <= 1.0 ){
     		gyro.reset();

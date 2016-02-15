@@ -11,14 +11,12 @@ public class DriveTrain_ToDistance extends Command {
 	private double MoveDistance;
 	private double MoveSpeed;
 	private double CurrentDistance;
-	private final double InitialDistance; //This is used for an eventual rework of the isFinished method
 
     public DriveTrain_ToDistance(double MoveDistance,double MoveSpeed) {
         // Use requires() here to declare subsystem dependencies
         requires(Robot.driveTrain);
         this.MoveDistance = MoveDistance;
         this.MoveSpeed = MoveSpeed;
-        InitialDistance = Robot.driveTrain.getDistance();
     }
 
     // Called just before this Command runs the first time
@@ -27,7 +25,7 @@ public class DriveTrain_ToDistance extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.driveTrain.drivemanual(MoveSpeed,MoveSpeed);
+    	Robot.driveTrain.drivemanual(-MoveSpeed,MoveSpeed);
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -37,9 +35,9 @@ public class DriveTrain_ToDistance extends Command {
         return ((MoveSpeed > 0 && CurrentDistance >= MoveDistance) ||
         	   (MoveSpeed < 0 && CurrentDistance <= MoveDistance));*/
  
-    	
-    	return ((MoveSpeed > 0 && (CurrentDistance-InitialDistance) >= MoveDistance) ||
-    			(MoveSpeed < 0 && (CurrentDistance-InitialDistance) <= MoveDistance));
+    	this.CurrentDistance = Robot.driveTrain.getDistance();
+    	return ((MoveSpeed > 0 && (this.CurrentDistance) >= this.MoveDistance) ||
+    			(MoveSpeed < 0 && (this.CurrentDistance) <= this.MoveDistance));
     }
 
     // Called once after isFinished returns true

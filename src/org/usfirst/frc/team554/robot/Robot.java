@@ -58,9 +58,9 @@ public class Robot extends IterativeRobot {
     	tWheel = new ThumbWheel();
     	oi = new OI();
     	
-    	arm.setInnerLimit(pref.getDouble("inner limit", 0.0));//unknown value
-    	arm.setOuterLimit(pref.getDouble("outer limit", 10.0));//unknown value
-    	arm.setShootableLimit(pref.getDouble("Shootable limit", 0.0)); //unknown value
+    	arm.setInnerLimit(pref.getDouble("inner limit", 5.0));//unknown value
+    	arm.setOuterLimit(pref.getDouble("outer limit", 200.0));//unknown value value is in degrees
+    	arm.setShootableLimit(pref.getDouble("Shootable limit", 180)); //unknown value
     	beaterBars.setCollectMotorSpeed(pref.getDouble("Collect Speed", -0.5));
     	beaterBars.setShootMotorSpeed(pref.getDouble("Shoot Speed", 1.0));
     	beaterBars.setPassMotorSpeed(pref.getDouble("Pass Speed", 0.5));
@@ -69,7 +69,7 @@ public class Robot extends IterativeRobot {
         driveTrain.resetEncoder();
         driveTrain.resetGyro();
         pneumatics.start();
-        driveTrain.gearUp();
+        driveTrain.gearDown();
         camera.cameraFront();
     }
     
@@ -84,6 +84,8 @@ public class Robot extends IterativeRobot {
 	
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
+        camera.updateCam();
+        log();
 	}
 
 	/**
@@ -114,6 +116,8 @@ public class Robot extends IterativeRobot {
      */
     public void autonomousPeriodic() {
         Scheduler.getInstance().run();
+        camera.updateCam();
+        log();
     }
 
     public void teleopInit() {
