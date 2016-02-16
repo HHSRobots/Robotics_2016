@@ -106,7 +106,8 @@ public class DriveTrain extends Subsystem {
         SmartDashboard.putNumber("drive leftmove", left_encoder.getDistance());
         SmartDashboard.putNumber("drive rightmove", right_encoder.getDistance());
         SmartDashboard.putNumber("drive distance", this.getDistance());
-        SmartDashboard.putBoolean("Top Gear", gearShiftSolenoid.get());
+        SmartDashboard.putBoolean("High Gear", gearShiftSolenoid.get());
+        SmartDashboard.putBoolean("Low Gear", !gearShiftSolenoid.get());
         SmartDashboard.putNumber("Gyro Rate", gyro.getRate());
         
     }
