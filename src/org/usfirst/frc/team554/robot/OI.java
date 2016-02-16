@@ -57,11 +57,9 @@ public class OI {
     	button7.whenPressed(new DriveTrain_EngageHighGear());
     	button8.whenPressed(new DriveTrain_EngageLowGear());
     	LB.whenPressed(new BeaterBars_Pass());
-    	LB.whenReleased(new BeaterBars_Stop());
     	A.whenPressed(new BeaterBars_Collect());
-    	A.whenReleased(new BeaterBars_Stop());
+    	B.whenPressed(new BeaterBars_Stop());
     	BBShootButton.whenActive(new BeaterBars_Shoot());
-    	BBShootButton.whenInactive(new BeaterBars_Stop());
     	//BBCollectButton.whenActive(new BeaterBars_Collect());
     	//BBCollectButton.whenInactive(new BeaterBars_Stop());
     	MoveArmWithJoystickButton.whileActive(new ArmMoveWithJoystick());
