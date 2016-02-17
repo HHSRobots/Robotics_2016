@@ -9,11 +9,8 @@ import edu.wpi.first.wpilibj.Preferences;
 
 import org.usfirst.frc.team554.robot.commands.AutonomousProgram001;
 import org.usfirst.frc.team554.robot.commands.AutonomousProgram002;
-import org.usfirst.frc.team554.robot.commands.ExampleCommand;
 import org.usfirst.frc.team554.robot.subsystems.*;
-
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+//import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /*
  * FYI These are the current encoder distances (in) per pulse: 
@@ -54,27 +51,28 @@ public class Robot extends IterativeRobot {
 		pref = Preferences.getInstance();
     	driveTrain = new DriveTrain();
     	arm = new Arm();
-    	arm.setInnerLimit(pref.getDouble("inner limit", 0));//unknown value
-    	arm.setOuterLimit(pref.getDouble("outer limit", 0.2));//unknown value
     	pneumatics = new Pneumatics();
-    	beaterBars = new BeaterBars(this);
+    	beaterBars = new BeaterBars();
     	camera = new Camera();
     	powerDistPanel = new PDP();
     	tWheel = new ThumbWheel();
     	oi = new OI();
-        
+    	
+    	arm.setInnerLimit(pref.getDouble("inner limit", 5.0));//unknown value
+    	arm.setOuterLimit(pref.getDouble("outer limit", 200.0));//unknown value value is in degrees
+    	arm.setShootableLimit(pref.getDouble("Shootable limit", 180)); //unknown value
+    	beaterBars.setCollectMotorSpeed(pref.getDouble("Collect Speed", -0.5));
+    	beaterBars.setShootMotorSpeed(pref.getDouble("Shoot Speed", 1.0));
+    	beaterBars.setPassMotorSpeed(pref.getDouble("Pass Speed", 0.5));
         
         arm.resetEncoder();
         driveTrain.resetEncoder();
         driveTrain.resetGyro();
-        
+        pneumatics.start();
+        driveTrain.gearDown();
+        camera.cameraFront();
     }
     
-    public Arm getArm()
-    {
-    	return arm;
-    }
-	
 	/**
      * This function is called once each time the robot enters Disabled mode.
      * You can use it to reset any subsystem information you want to clear when
@@ -86,6 +84,8 @@ public class Robot extends IterativeRobot {
 	
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
+        camera.updateCam();
+        log();
 	}
 
 	/**
@@ -116,6 +116,8 @@ public class Robot extends IterativeRobot {
      */
     public void autonomousPeriodic() {
         Scheduler.getInstance().run();
+        camera.updateCam();
+        log();
     }
 
     public void teleopInit() {

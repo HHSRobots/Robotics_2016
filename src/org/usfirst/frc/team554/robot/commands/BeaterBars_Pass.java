@@ -21,17 +21,17 @@ public class BeaterBars_Pass extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.beaterBars.beaterPass();
-    }
+    	}
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return true;
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.beaterBars.stop();
+    	Robot.beaterBars.beaterPass();
+
     }
 
     // Called when another command which requires one or more of the same

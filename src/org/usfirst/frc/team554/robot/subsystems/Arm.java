@@ -1,7 +1,5 @@
 package org.usfirst.frc.team554.robot.subsystems;
-import org.usfirst.frc.team554.robot.commands.Arm_Move;
 import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -12,16 +10,11 @@ public class Arm extends Subsystem {
 	private SpeedController armMotorRight;
 	private Encoder armMotorLeftEncoder, armMotorRightEncoder;
 	
-	
-	
 	// Backwards is spinning toward robot while forward is spinning away from robot
 	private double armOuterLimit, armInnerLimit, armShootableLimit;
 	
-	
 	public Arm() {
 		super();
-		
-		
 		armMotorLeft = new Talon(7); 
 		armMotorRight = new Talon(6); 
 		
@@ -40,47 +33,21 @@ public class Arm extends Subsystem {
 		
 		// distance per pulse could be .07161685 in.( distance the tip of the arm moves) with a max of about 52.3598776 in
 		//							 or 1 pulse with a max of about 730
-		// 							 or .27355623 degrees with a max of about 200 deg
+		// 							 or .27355623 degrees (360 degrees = 1316 pulse readout)
 		
-		armMotorRightEncoder.setDistancePerPulse(1./256.); 
-    	armMotorLeftEncoder.setDistancePerPulse(1./256.); 
-		
-		
-		armOuterLimit = 0.0;
-		armShootableLimit = 0.5; // distance needes to be measured and set. 
-		armInnerLimit = 1.0; /// This still needs to be set. 
-		
-		
-	}
+		armMotorRightEncoder.setDistancePerPulse(360./1316); 
+    	armMotorLeftEncoder.setDistancePerPulse(360./1316);
+		}
 	
 	
 	public void armStop(){
-    	armMotorLeft.set(0);
-    	armMotorRight.set(0);
+    	armMotorLeft.set(0.);
+    	armMotorRight.set(0.);
     }
 	
-	
-	public void armMove(Joystick stick){
-		// Remember! one of these motors will be negative. This must be fixed when updated.
-		//SmartDashboard.putNumber("Throttle Value", stick.getThrottle());
-    	
-    	if (didHitInnerLimit() && stick.getThrottle() > 0.1 ){
-    		armMotorLeft.set(-stick.getThrottle());
-    		armMotorRight.set(stick.getThrottle());	
-    	}
-    	else if (didHitOuterLimit() && stick.getThrottle() < -0.1 ){
-    		armMotorLeft.set(-stick.getThrottle());
-    		armMotorRight.set(stick.getThrottle());
-    	}
-    	else {
-    		armStop();
-    	}
-		
-	}
 	public void resetEncoder(){
 			armMotorLeftEncoder.reset();
 			armMotorRightEncoder.reset();
-	
     }
 	
 	public boolean didHitInnerLimit(){
@@ -91,12 +58,12 @@ public class Arm extends Subsystem {
 	}
 	public boolean isShootable()
 	{
-		return this.getRightEncoderDistance() >= armShootableLimit;
+		return (getRightEncoderDistance() <= armShootableLimit) && (getLeftEncoderDistance() <= armShootableLimit);
 	}
 	
 	
 	public double getLeftEncoderDistance(){
-		// Will return negative
+		// Will return positive A and B channels reversed on inputs
 		return armMotorLeftEncoder.getDistance();
 	}
 	public double getRightEncoderDistance(){
@@ -114,31 +81,12 @@ public class Arm extends Subsystem {
 	
 	
 	protected void initDefaultCommand() {
-		// TODO Auto-generated method stub
-		setDefaultCommand( new Arm_Move());
-		
+        // Set the default command for a subsystem here.
 	}
 	
-	public boolean armIsAtDistance(double distance){
-		return getRightEncoderDistance() == distance;
+	public double getArmAngle() {
+		 return ((armMotorLeftEncoder.getDistance()+armMotorRightEncoder.getDistance())/2.);
 	}
-	
-	
-	public void moveArmToDistance(double distance){
-		double speed;
-		if (getRightEncoderDistance() < distance){
-			speed = 1;
-		}
-		else if (getRightEncoderDistance() > distance){
-			speed = -1;
-		}
-		else{
-			speed = 0;
-		}
-		
-		moveArmAtSpeed(speed);
-	}
-	
 	
 	public void moveArmAtSpeed(double speed){
 		armMotorLeft.set(-speed);
@@ -158,7 +106,6 @@ public class Arm extends Subsystem {
 	
 	public void log(){
 		
-		SmartDashboard.putNumber("Current Percentage of Movement", (armMotorLeftEncoder.getDistance() / armInnerLimit) * 100  );
 		SmartDashboard.putNumber("Right Encoder Distance", getRightEncoderDistance());
 		SmartDashboard.putNumber("Left Encoder Distance", getLeftEncoderDistance());
 		
