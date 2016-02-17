@@ -34,8 +34,8 @@ public class DriveTrain extends Subsystem {
     	
     	drive.setSafetyEnabled(false);
     	
-    	left_encoder.setDistancePerPulse(0.01745);
-    	right_encoder.setDistancePerPulse(0.01745);
+    	left_encoder.setDistancePerPulse(0.0486947*127/134);//correction value based on test.
+    	right_encoder.setDistancePerPulse(0.0486947*127/134);
     	
     	gyro = new AnalogGyro(0);
     	wasHeld=false;
@@ -46,6 +46,16 @@ public class DriveTrain extends Subsystem {
 
     public void initDefaultCommand() {
     	setDefaultCommand(new DriveTrain_JoyStickDrive());
+    }
+    
+    public void driveAutomaticStraight(double speed)//method to be used by the robot when it is moving in a straight line in autonomous
+    {//remember to put something that resets the gyro when the driving is first begun in the autonomous code list.
+    	double z = 0;
+    	double Kp = -0.025;
+    	double angle = gyro.getAngle();
+    	z = Kp * angle;
+    	
+    	drive.arcadeDrive(-speed, z);
     }
     
     public void drivemanual(double left, double right){

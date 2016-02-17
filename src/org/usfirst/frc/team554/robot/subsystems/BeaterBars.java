@@ -43,7 +43,7 @@ private Boolean beaterBarShoot, beaterBarPass, beaterBarCollect, beaterBarStop;
 	
 	public void beaterCollect(){
 		OuterBeaterBarMotor.set(collectMotorSpeed);
-		InnerBeaterBarMotor.set(collectMotorSpeed);
+		InnerBeaterBarMotor.set(-collectMotorSpeed);
 		beaterBarPass = false;
 		beaterBarShoot = false;
 		beaterBarStop = false;
@@ -56,7 +56,7 @@ private Boolean beaterBarShoot, beaterBarPass, beaterBarCollect, beaterBarStop;
 	
 	public void beaterShoot(){
 		OuterBeaterBarMotor.set(0);
-		InnerBeaterBarMotor.set(shootMotorSpeed);
+		InnerBeaterBarMotor.set(-shootMotorSpeed);
 		beaterBarPass = false;
 		beaterBarShoot = true;
 		beaterBarStop = false;
@@ -65,7 +65,7 @@ private Boolean beaterBarShoot, beaterBarPass, beaterBarCollect, beaterBarStop;
 	}
 	public void beaterPass(){
 		OuterBeaterBarMotor.set(0);
-		InnerBeaterBarMotor.set(passMotorSpeed);
+		InnerBeaterBarMotor.set(-passMotorSpeed);
 		beaterBarPass = true;
 		beaterBarShoot = false;
 		beaterBarStop = false;

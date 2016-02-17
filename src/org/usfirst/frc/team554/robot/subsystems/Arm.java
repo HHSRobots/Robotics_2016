@@ -108,6 +108,8 @@ public class Arm extends Subsystem {
 		
 		SmartDashboard.putNumber("Right Encoder Distance", getRightEncoderDistance());
 		SmartDashboard.putNumber("Left Encoder Distance", getLeftEncoderDistance());
+		SmartDashboard.putNumber("arm movement percentage", this.getArmAngle()/armOuterLimit);
+		SmartDashboard.putBoolean("is it shootable?", this.isShootable());
 		
 	}
 
