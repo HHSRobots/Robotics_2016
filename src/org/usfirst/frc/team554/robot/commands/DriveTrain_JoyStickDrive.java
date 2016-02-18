@@ -20,7 +20,7 @@ public class DriveTrain_JoyStickDrive extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.driveTrain.drive(Robot.oi.getOperator()); // aww
+    	Robot.driveTrain.drive(Robot.oi.getDriver()); // aww
     }
 
     // Make this return true when this Command no longer needs to run execute()
