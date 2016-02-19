@@ -5,9 +5,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import com.ni.vision.NIVision;
 import com.ni.vision.NIVision.FlipAxis;
-//import com.ni.vision.NIVision.DrawMode;
+import com.ni.vision.NIVision.DrawMode;
 import com.ni.vision.NIVision.Image;
-//import com.ni.vision.NIVision.ShapeMode;
+import com.ni.vision.NIVision.ShapeMode;
 
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.Joystick;
@@ -102,10 +102,10 @@ public class Camera extends Subsystem {
 	 */
     public void updateCam()
     {
-        //NIVision.Rect rect = new NIVision.Rect(0, 320, 480, 1);
+        NIVision.Rect rect = new NIVision.Rect(0, 320, 480, 1);
     	NIVision.IMAQdxGrab(curCam, frame, 1);
-    	//NIVision.imaqDrawShapeOnImage(frame, frame, rect,
-        //        DrawMode.DRAW_VALUE, ShapeMode.SHAPE_RECT, 0.0f);
+    	NIVision.imaqDrawShapeOnImage(frame, frame, rect,
+                DrawMode.DRAW_VALUE, ShapeMode.SHAPE_RECT, 0.0f);
     	NIVision.imaqFlip(frame, frame, FlipAxis.CENTER_AXIS);
         server.setImage(frame);
     }
