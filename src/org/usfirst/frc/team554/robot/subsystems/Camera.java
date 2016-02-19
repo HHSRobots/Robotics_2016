@@ -42,7 +42,7 @@ public class Camera extends Subsystem {
         frame = NIVision.imaqCreateImage(NIVision.ImageType.IMAGE_RGB, 0);
         // Server that we'll give the img to
         server = CameraServer.getInstance();
-        conversionRate = -0.125;
+        conversionRate = -0.25;
         camControl = new Servo(1);
     }
     // Put methods for controlling this subsystem

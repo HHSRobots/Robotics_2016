@@ -57,11 +57,11 @@ public class DriveTrain extends Subsystem {
     	double angle = gyro.getAngle();
     	z = Kp * angle;
     	if ( Math.abs( speed) > 0.4 ){
-    		if ( (distance - getDistance()) <= distanceToSlowDown  ){
-    			speed = (speed - 0.4) / 20 * (distance - getDistance()) + 0.4;
+    		if ( (distance - getDistance()) <= distanceToSlowDown && (distance - getDistance()) > 0 ){
+    			speed = ((speed - 0.4) / 20 * (distance - getDistance()) + 0.4);
     		}
-    		else if ( (getDistance()- distance ) <= distanceToSlowDown ){
-    			speed = -1.0 * ( (speed - 0.4) / 20 * (distance - getDistance()) - 0.4 );
+    		else if ( (getDistance()- distance ) <= distanceToSlowDown && (getDistance()- distance) > 0 ){
+    			speed =  -1*((speed - 0.4) / 20 * (distance - getDistance()) + 0.4);
     		}
     		
     	}	
