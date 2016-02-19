@@ -42,7 +42,7 @@ public class Camera extends Subsystem {
         frame = NIVision.imaqCreateImage(NIVision.ImageType.IMAGE_RGB, 0);
         // Server that we'll give the img to
         server = CameraServer.getInstance();
-        conversionRate = .1135;
+        conversionRate = -0.125;
         camControl = new Servo(1);
     }
     // Put methods for controlling this subsystem
@@ -125,7 +125,7 @@ public class Camera extends Subsystem {
     	SmartDashboard.putNumber("Throttlesdfdfdffddfdfdffddf",currentAngle);
     	
        	//camControl.set((currentAngle*(1.75/2.)+(1.-(1.75/2.))));
-       	camControl.set(currentAngle*conversionRate+conversionRate);
+       	camControl.set(currentAngle*conversionRate-conversionRate);
     }
    
 }

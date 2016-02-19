@@ -21,6 +21,7 @@ public class DriveTrain extends Subsystem {
     private Encoder left_encoder, right_encoder;
     private AnalogGyro gyro;
     private Solenoid gearShiftSolenoid;
+    private double distanceToSlowDown;
     private boolean wasHeld;
     
     public DriveTrain(){
@@ -33,6 +34,7 @@ public class DriveTrain extends Subsystem {
     	gearShiftSolenoid = new Solenoid(0);
     	
     	drive.setSafetyEnabled(false);
+    	distanceToSlowDown = 20.0;
     	
     	left_encoder.setDistancePerPulse(0.0486947*127/134);//correction value based on test.
     	right_encoder.setDistancePerPulse(0.0486947*127/134);
@@ -48,12 +50,21 @@ public class DriveTrain extends Subsystem {
     	setDefaultCommand(new DriveTrain_JoyStickDrive());
     }
     
-    public void driveAutomaticStraight(double speed)//method to be used by the robot when it is moving in a straight line in autonomous
+    public void driveAutomaticStraight(double speed, double distance)//method to be used by the robot when it is moving in a straight line in autonomous
     {//remember to put something that resets the gyro when the driving is first begun in the autonomous code list.
     	double z = 0;
     	double Kp = -0.025;
     	double angle = gyro.getAngle();
     	z = Kp * angle;
+    	if ( Math.abs( speed) > 0.4 ){
+    		if ( (distance - getDistance()) <= distanceToSlowDown  ){
+    			speed = (speed - 0.4) / 20 * (distance - getDistance()) + 0.4;
+    		}
+    		else if ( (getDistance()- distance ) <= distanceToSlowDown ){
+    			speed = -1.0 * ( (speed - 0.4) / 20 * (distance - getDistance()) - 0.4 );
+    		}
+    		
+    	}	
     	
     	drive.arcadeDrive(-speed, z);
     }
