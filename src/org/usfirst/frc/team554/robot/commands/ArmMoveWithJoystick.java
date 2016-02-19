@@ -1,21 +1,19 @@
 package org.usfirst.frc.team554.robot.commands;
 
 import org.usfirst.frc.team554.robot.Robot;
+
 import edu.wpi.first.wpilibj.command.Command;
 
-/**
- *
- */
-public class Arm_Move extends Command {
+public class ArmMoveWithJoystick extends Command {
 
-    public Arm_Move() {
+	private double YValue;
+	private boolean WeAreDone;
+	
+    public ArmMoveWithJoystick() {
     	requires(Robot.arm);
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     }
-    
-    //You will have a bad time...
-    
     
     // Called just before this Command runs the first time
     protected void initialize() {
@@ -23,12 +21,22 @@ public class Arm_Move extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    		Robot.arm.armMove(Robot.oi.getOperator());
-    }
+    	this.WeAreDone = false;
+        this.YValue = Robot.oi.getOperator().getY();
+        	if ((Robot.arm.didHitInnerLimit()==false) && (this.YValue > 0.1) ){  // move arm in
+        		Robot.arm.moveArmAtSpeed(this.YValue);
+         	}
+        	else if ((Robot.arm.didHitOuterLimit()==false) && (this.YValue < -0.1) ){  //move arm out
+        		Robot.arm.moveArmAtSpeed(this.YValue);
+        	}
+        	else {
+        		this.WeAreDone = true;
+        	}
+     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return this.WeAreDone;
     }
 
     // Called once after isFinished returns true

@@ -1,19 +1,18 @@
 package org.usfirst.frc.team554.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
-import org.usfirst.frc.team554.robot.Robot;
-import org.usfirst.frc.team554.robot.subsystems.*;
-
 
 /**
  *
  */
-public class InnerBeaterBar_Beat extends Command {
+public class TimeDelay extends Command {
+	double TimeoutValue;
 
-    public InnerBeaterBar_Beat() {
-    	requires(Robot.innerBeaterBar);
+    public TimeDelay(double TimeoutValue) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
+    	this.TimeoutValue= TimeoutValue;
+        setTimeout(this.TimeoutValue);
     }
 
     // Called just before this Command runs the first time
@@ -22,12 +21,11 @@ public class InnerBeaterBar_Beat extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.innerBeaterBar.moveBeater(Robot.oi.getOperator());
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return isTimedOut();
     }
 
     // Called once after isFinished returns true

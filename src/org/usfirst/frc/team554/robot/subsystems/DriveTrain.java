@@ -7,7 +7,6 @@ import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.SpeedController;
-import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.VictorSP;
 
 import org.usfirst.frc.team554.robot.commands.DriveTrain_JoyStickDrive;
@@ -31,10 +30,12 @@ public class DriveTrain extends Subsystem {
     	drive = new RobotDrive(left_wheels, right_wheels);
     	left_encoder = new Encoder(2,3);
     	right_encoder = new Encoder(4,5);
-    	gearShiftSolenoid = new Solenoid(0);//is this where it will go? who knows!!!!!!!!
+    	gearShiftSolenoid = new Solenoid(0);
     	
-    	left_encoder.setDistancePerPulse(0.01745);
-    	right_encoder.setDistancePerPulse(0.01745);
+    	drive.setSafetyEnabled(false);
+    	
+    	left_encoder.setDistancePerPulse(0.0486947*127/134);//correction value based on test.
+    	right_encoder.setDistancePerPulse(0.0486947*127/134);
     	
     	gyro = new AnalogGyro(0);
     	wasHeld=false;
@@ -47,23 +48,34 @@ public class DriveTrain extends Subsystem {
     	setDefaultCommand(new DriveTrain_JoyStickDrive());
     }
     
+    public void driveAutomaticStraight(double speed)//method to be used by the robot when it is moving in a straight line in autonomous
+    {//remember to put something that resets the gyro when the driving is first begun in the autonomous code list.
+    	double z = 0;
+    	double Kp = -0.025;
+    	double angle = gyro.getAngle();
+    	z = Kp * angle;
+    	
+    	drive.arcadeDrive(-speed, z);
+    }
+    
     public void drivemanual(double left, double right){
-    	drive.tankDrive(left,right);
+    	left_wheels.set(left);
+    	right_wheels.set(right);
     }
     
     public void drive(Joystick joystick_driver){
-    	double z; // amount of rotation applied to robot -128 through 128, 0 is none
-    	double Kp = 0.025; // constant that gives magnitude of rotation correction (recomended is 0.03)
+    	double z=0; // amount of rotation applied to robot -128 through 128, 0 is none
+    	double Kp = -0.025; // constant that gives magnitude of rotation correction (recomended is 0.03)
     	
-    	if (joystick_driver.getRawButton(12) == true ){	
-    		z =-joystick_driver.getZ();
+    	if (joystick_driver.getRawButton(2) == true ){	
+    		z = joystick_driver.getZ();
     		wasHeld = true;
-    	} else if (wasHeld && Math.abs(gyro.getRate()) <= 1 ){
+    	} else if (wasHeld && Math.abs(gyro.getRate()) <= 10.0 && !joystick_driver.getRawButton(2)){
     		gyro.reset();
     		wasHeld = false;
     		double angle = gyro.getAngle();
     		z = Kp * angle;
-    	} else {
+    	} else if(!wasHeld) {
     	// inset gyro balancing code here to compensate for skew
     		double angle = gyro.getAngle();
     		z = Kp * angle;
@@ -73,12 +85,16 @@ public class DriveTrain extends Subsystem {
     }
     
     
-    public void reset(){
+    public void resetEncoder(){
     	left_encoder.reset();
     	right_encoder.reset();
     }
+    public void resetGyro(){
+    	gyro.reset();
+    }
     
     public double getDistance(){
+    	
     	return (left_encoder.getDistance() + right_encoder.getDistance())/2;
     }
     
@@ -100,5 +116,9 @@ public class DriveTrain extends Subsystem {
         SmartDashboard.putNumber("drive leftmove", left_encoder.getDistance());
         SmartDashboard.putNumber("drive rightmove", right_encoder.getDistance());
         SmartDashboard.putNumber("drive distance", this.getDistance());
+        SmartDashboard.putBoolean("High Gear", gearShiftSolenoid.get());
+        SmartDashboard.putBoolean("Low Gear", !gearShiftSolenoid.get());
+        SmartDashboard.putNumber("Gyro Rate", gyro.getRate());
+        
     }
 }

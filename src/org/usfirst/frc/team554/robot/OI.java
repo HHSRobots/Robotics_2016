@@ -1,5 +1,7 @@
 package org.usfirst.frc.team554.robot;
+
 import org.usfirst.frc.team554.robot.commands.*;
+import org.usfirst.frc.team554.robot.triggers.*;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
@@ -13,8 +15,8 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
   */
 public class OI {
 
-
 	// Joystick: Logitech Controller( Driver)
+	
     Joystick driver_Joystick = new Joystick(0);
     Button trigger = new JoystickButton(driver_Joystick,1);
     Button missleButton = new JoystickButton(driver_Joystick,2);
@@ -27,19 +29,9 @@ public class OI {
     Button button9 = new JoystickButton(driver_Joystick,9);
     Button button10 = new JoystickButton(driver_Joystick,10);
     
-    public OI()
-    {
-    	trigger.whenActive(new Camera_Toggle());
-    	button7.whenActive(new EngageHighGear());
-    	button8.whenActive(new EngageLowGear());
-    }
-    
-
-
-	//Joysticks: Xbox One Controller( Operator)
-    //Fixed. minus the Trigger axis
-    
-    
+  //Joysticks: Xbox One Controller( Operator)
+  //Fixed. minus the Trigger axis
+	
 	Joystick XboxOneController = new Joystick(1);
 	Button A = new JoystickButton(XboxOneController, 1);
 	Button B = new JoystickButton(XboxOneController, 2);
@@ -47,7 +39,11 @@ public class OI {
     Button Y = new JoystickButton(XboxOneController, 4);
     Button LB = new JoystickButton(XboxOneController, 5);
 	Button RB = new JoystickButton(XboxOneController, 6);
-	
+    BeaterBarShootTrigger BBShootButton = new BeaterBarShootTrigger(XboxOneController);
+    BeaterBarCollectTrigger BBCollectButton = new BeaterBarCollectTrigger(XboxOneController);
+    ArmMoveWithJoystickTrigger MoveArmWithJoystickButton = new ArmMoveWithJoystickTrigger(XboxOneController);
+    
+
 	//Both of the triggers need to be set as their relative axis
 	Button LTrigger = new JoystickButton(XboxOneController, 7);
 	Button RTrigger = new JoystickButton(XboxOneController, 8);
@@ -55,9 +51,20 @@ public class OI {
     Button RStickButton = new JoystickButton(XboxOneController,10);
     
     
+    public OI()
+    {
+    	//trigger.whenPressed(new Camera_Toggle());
+    	button7.whenPressed(new DriveTrain_EngageHighGear());
+    	button8.whenPressed(new DriveTrain_EngageLowGear());
+    	LB.whenPressed(new BeaterBars_Pass());
+    	A.whenPressed(new BeaterBars_Collect());
+    	B.whenPressed(new BeaterBars_Stop());
+    	BBShootButton.whenActive(new BeaterBars_Shoot());
+    	//BBCollectButton.whenActive(new BeaterBars_Collect());
+    	//BBCollectButton.whenInactive(new BeaterBars_Stop());
+    	MoveArmWithJoystickButton.whileActive(new ArmMoveWithJoystick());
+    }
     
-    
-
 	public Joystick getOperator(){
 		return XboxOneController;
 	}
@@ -66,32 +73,6 @@ public class OI {
 		return driver_Joystick;
 	}
 	
-	
-    //// CREATING BUTTONS
-    // One type of button is a joystick button which is any button on a joystick.
-    // You create one by telling it which joystick it's on and which button
-    // number it is.
-    // Joystick stick = new Joystick(port);
-    // Button button = new JoystickButton(stick, buttonNumber);
-    
-    // There are a few additional built in buttons you can use. Additionally,
-    // by subclassing Button you can create custom triggers and bind those to
-    // commands the same as any other Button.
-    
-    //// TRIGGERING COMMANDS WITH BUTTONS
-    // Once you have a button, it's trivial to bind it to a button in one of
-    // three ways:
-    
-    // Start the command when the button is pressed and let it run the command
-    // until it is finished as determined by it's isFinished method.
-    // button.whenPressed(new ExampleCommand());
-    
-    // Run the command while the button is being held down and interrupt it once
-    // the button is released.
-    // button.whileHeld(new ExampleCommand());
-    
-    // Start the command when the button is released  and let it run the command
-    // until it is finished as determined by it's isFinished method.
-    // button.whenReleased(new ExampleCommand());
+
 }
 
