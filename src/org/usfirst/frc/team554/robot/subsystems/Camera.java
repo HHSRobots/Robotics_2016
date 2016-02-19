@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import com.ni.vision.NIVision;
+import com.ni.vision.NIVision.FlipAxis;
 //import com.ni.vision.NIVision.DrawMode;
 import com.ni.vision.NIVision.Image;
 //import com.ni.vision.NIVision.ShapeMode;
@@ -41,12 +42,8 @@ public class Camera extends Subsystem {
         frame = NIVision.imaqCreateImage(NIVision.ImageType.IMAGE_RGB, 0);
         // Server that we'll give the img to
         server = CameraServer.getInstance();
-        //This will be the servo for controlling the camera movement
+        conversionRate = .1135;
         camControl = new Servo(1);
-        
-        
-        //I  don't have the conversion rate on the two angles yet.
-    	conversionRate = 0.0; //Conversion rate between the servo angles and the throttle setting
     }
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
@@ -109,6 +106,7 @@ public class Camera extends Subsystem {
     	NIVision.IMAQdxGrab(curCam, frame, 1);
     	//NIVision.imaqDrawShapeOnImage(frame, frame, rect,
         //        DrawMode.DRAW_VALUE, ShapeMode.SHAPE_RECT, 0.0f);
+    	NIVision.imaqFlip(frame, frame, FlipAxis.CENTER_AXIS);
         server.setImage(frame);
     }
     
@@ -123,10 +121,11 @@ public class Camera extends Subsystem {
     
     public void moveCamera(Joystick driver)
     {
-    	//This may need to flipped (+/-). Luke wants 100% throttle to be when the camera is facing down the most
-    	currentAngle = driver.getThrottle(); //This what the driver's joystick throttle is set at
+    	currentAngle = driver.getThrottle();
+    	SmartDashboard.putNumber("Throttlesdfdfdffddfdfdffddf",currentAngle);
     	
-    	camControl.setAngle((currentAngle*conversionRate)); //sets the servo angle with respect to the throttle
+       	//camControl.set((currentAngle*(1.75/2.)+(1.-(1.75/2.))));
+       	camControl.set(currentAngle*conversionRate+conversionRate);
     }
    
 }
