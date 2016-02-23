@@ -50,6 +50,29 @@ public class DriveTrain extends Subsystem {
     	setDefaultCommand(new DriveTrain_JoyStickDrive());
     }
     
+    public void driveAutomaticTurn( double angle){
+    	
+    	// These things do the exact same thing. B is just easier to read.
+    	
+    	//A
+    	double z = (angle > 0 ) ? 1.0 : -1.0 ;
+    	
+    	//B
+    	if (angle > 0){
+    		z = 1.0;
+    	}
+    	else {
+    		z = -1.0;
+    	}
+    	
+    	
+    	
+  
+    	
+    	drive.arcadeDrive(0,z);
+    }
+
+    
     public void driveAutomaticStraight(double speed, double distance)//method to be used by the robot when it is moving in a straight line in autonomous
     {//remember to put something that resets the gyro when the driving is first begun in the autonomous code list.
     	double z = 0;
@@ -79,7 +102,20 @@ public class DriveTrain extends Subsystem {
     	double Kp = -0.025; // constant that gives magnitude of rotation correction (recomended is 0.03)
     	
     	if (joystick_driver.getRawButton(2) == true ){	
-    		z = joystick_driver.getZ();
+    		
+    		
+    		if (joystick_driver.getZ() > 0){
+    			z = 1 / ( 1 + Math.pow(Math.E, - 9.19024 *( joystick_driver.getZ() - 0.5)));
+    		}
+    		else if (joystick_driver.getZ() < 0){
+    			z = - 1 / ( 1 + Math.pow(Math.E, - 9.19024 *(-0.5 - joystick_driver.getZ())));
+    		}
+    		else {
+    			z = 0.0;
+    		}
+    		
+    		//z = joystick_driver.getZ();
+    		
     		wasHeld = true;
     	} else if (wasHeld && Math.abs(gyro.getRate()) <= 10.0 && !joystick_driver.getRawButton(2)){
     		gyro.reset();
@@ -109,9 +145,10 @@ public class DriveTrain extends Subsystem {
     	return (left_encoder.getDistance() + right_encoder.getDistance())/2;
     }
     
-    public AnalogGyro getGyro(){
-    	return this.gyro;
+    public double getGyroAngle(){
+    	return this.gyro.getAngle();
     }
+    
     
     public void gearUp()
     {

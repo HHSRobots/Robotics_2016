@@ -9,6 +9,8 @@ import edu.wpi.first.wpilibj.Preferences;
 
 import org.usfirst.frc.team554.robot.commands.AutonomousProgram001;
 import org.usfirst.frc.team554.robot.commands.AutonomousProgram002;
+import org.usfirst.frc.team554.robot.commands.AutonomousProgram003;
+import org.usfirst.frc.team554.robot.commands.AutonomousProgram004;
 import org.usfirst.frc.team554.robot.subsystems.*;
 //import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -59,7 +61,7 @@ public class Robot extends IterativeRobot {
     	oi = new OI();
     	
     	arm.setInnerLimit(pref.getDouble("inner limit", 5.0));//semiknown value
-    	arm.setOuterLimit(pref.getDouble("outer limit", 200.0));//semiknown value value is in degrees
+    	arm.setOuterLimit(pref.getDouble("outer limit", 235.0));//semiknown value value is in degrees
     	arm.setShootableLimit(pref.getDouble("Shootable limit", 180)); //semiknown value
     	beaterBars.setCollectMotorSpeed(pref.getDouble("Collect Speed", -0.5));
     	beaterBars.setShootMotorSpeed(pref.getDouble("Shoot Speed", 1.0));
@@ -104,13 +106,20 @@ public class Robot extends IterativeRobot {
 				break;
 			case 2: autonomousCommand = new AutonomousProgram002();
 		        break;
+			case 3: autonomousCommand = new AutonomousProgram003();
+				break;
+			case 4: autonomousCommand = new AutonomousProgram004();
+				break;
 		default: ;//do nothing
 		};
+		driveTrain.resetGyro();
+		driveTrain.resetEncoder();
 		
     	if (autonomousCommand != null) autonomousCommand.start();
 		
     }
 
+    
     /**
      * This function is called periodically during autonomous
      */
