@@ -103,18 +103,24 @@ public class DriveTrain extends Subsystem {
     	
     	if (joystick_driver.getRawButton(2) == true ){	
     		
+    		double c = 0.75; // C is the center of the logistic curve
+    		double k = (Math.log(100)-1) / c; // this shouldn't be changed unless my math is wrong
+    		if ( Math.abs(joystick_driver.getY()) >= 0.1){
+    			
+	    		if (joystick_driver.getZ() > 0 ){
+	    			z = 1 / ( 1 + Math.pow(Math.E, - k *( joystick_driver.getZ() - c)));
+	    		}
+	    		else if (joystick_driver.getZ() < 0){
+	    			z = - 1 / ( 1 + Math.pow(Math.E, - k *(-c - joystick_driver.getZ())));
+	    		}
+	    		else {
+	    			z = 0.0;
+	    		}
+    		}
+    		else{
+    			z = joystick_driver.getZ();
+    		}
     		
-    		if (joystick_driver.getZ() > 0){
-    			z = 1 / ( 1 + Math.pow(Math.E, - 9.19024 *( joystick_driver.getZ() - 0.5)));
-    		}
-    		else if (joystick_driver.getZ() < 0){
-    			z = - 1 / ( 1 + Math.pow(Math.E, - 9.19024 *(-0.5 - joystick_driver.getZ())));
-    		}
-    		else {
-    			z = 0.0;
-    		}
-    		
-    		//z = joystick_driver.getZ();
     		
     		wasHeld = true;
     	} else if (wasHeld && Math.abs(gyro.getRate()) <= 10.0 && !joystick_driver.getRawButton(2)){
@@ -158,6 +164,10 @@ public class DriveTrain extends Subsystem {
     public void gearDown()
     {
     	gearShiftSolenoid.set(false);
+    }
+    
+    public Boolean getGear(){
+    	return gearShiftSolenoid.get();
     }
     
     public void log() {

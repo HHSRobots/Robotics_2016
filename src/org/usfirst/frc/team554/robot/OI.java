@@ -59,10 +59,12 @@ public class OI {
     	LB.whenPressed(new BeaterBars_Pass());
     	A.whenPressed(new BeaterBars_Collect());
     	B.whenPressed(new BeaterBars_Stop());
+    	X.whenPressed(new ArmMoveToAngle(170,0.6));
     	BBShootButton.whenActive(new BeaterBars_Shoot());
     	//BBCollectButton.whenActive(new BeaterBars_Collect());
     	//BBCollectButton.whenInactive(new BeaterBars_Stop());
     	MoveArmWithJoystickButton.whileActive(new ArmMoveWithJoystick());
+    	trigger.whenPressed(new DriveTrain_TriggerRotate(160));
     }
     
 	public Joystick getOperator(){

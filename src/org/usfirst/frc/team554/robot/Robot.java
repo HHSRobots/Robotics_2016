@@ -64,7 +64,7 @@ public class Robot extends IterativeRobot {
     	
     	arm.setInnerLimit(pref.getDouble("inner limit", 5.0));//semiknown value
     	arm.setOuterLimit(pref.getDouble("outer limit", 235.0));//semiknown value value is in degrees
-    	arm.setShootableLimit(pref.getDouble("Shootable limit", 180)); //semiknown value
+    	arm.setShootableLimit(pref.getDouble("Shootable limit", 90)); //semiknown value
     	beaterBars.setCollectMotorSpeed(pref.getDouble("Collect Speed", -0.5));
     	beaterBars.setShootMotorSpeed(pref.getDouble("Shoot Speed", 1.0));
     	beaterBars.setPassMotorSpeed(pref.getDouble("Pass Speed", 0.5));
