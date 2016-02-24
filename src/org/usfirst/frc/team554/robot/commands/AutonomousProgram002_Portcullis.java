@@ -9,9 +9,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  */
 //                   												Portcullis
 
-public class AutonomousProgram002 extends CommandGroup {
+public class AutonomousProgram002_Portcullis extends CommandGroup {
 	 // portcullis
-    public  AutonomousProgram002() {
+    public  AutonomousProgram002_Portcullis() {
     	
     	addParallel(new ArmMoveToAngle(Robot.arm.getOuterLimit(),.6)); // move arm to floor
     	addSequential(new DriveTrain_ToDistance(59.,.6));// drive to place arm under portcullis

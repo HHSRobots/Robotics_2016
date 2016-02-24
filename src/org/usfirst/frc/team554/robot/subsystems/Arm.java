@@ -78,7 +78,10 @@ public class Arm extends Subsystem {
 	{
 		return armShootableLimit;
 	}
-	
+	public double getInnerLimit()
+	{
+		return armInnerLimit;
+	}
 	
 	protected void initDefaultCommand() {
         // Set the default command for a subsystem here.
