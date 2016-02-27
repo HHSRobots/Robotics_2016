@@ -14,6 +14,7 @@ public class ArmMoveToAngle extends Command {
 	private boolean movedone;
 	private double MoveDir;
 	private double CurrentAngle;
+	private final double slope;
 
     public ArmMoveToAngle(double TargetAngle,double MoveSpeed) {
         // Use requires() here to declare subsystem dependencies
@@ -21,6 +22,7 @@ public class ArmMoveToAngle extends Command {
     	requires(Robot.arm);
     	this.TargetAngle = TargetAngle;
     	this.MoveSpeed = MoveSpeed;
+    	this.slope = -1.0 * (( this.MoveSpeed - .4) / 30);
     	}
 
     // Called just before this Command runs the first time
@@ -36,10 +38,14 @@ public class ArmMoveToAngle extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	double currentMoveSpeed = this.MoveSpeed;
     	this.CurrentAngle = Robot.arm.getArmAngle();
+    	if ((this.CurrentAngle > (this.TargetAngle - 30)) && this.MoveDir < 0 ) {
+        	currentMoveSpeed = this.slope * (this.CurrentAngle - this.TargetAngle) + .4;
+        	}
     	if ( ((MoveDir == -1.) && (this.CurrentAngle < this.TargetAngle)) ||
     		 ((MoveDir == 1.) && (this.CurrentAngle > this.TargetAngle)) )	{
-    		Robot.arm.moveArmAtSpeed(this.MoveSpeed * this.MoveDir);
+    		Robot.arm.moveArmAtSpeed(currentMoveSpeed * this.MoveDir);
     		}
     	else {
     		Robot.arm.armStop();

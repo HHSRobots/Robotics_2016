@@ -9,14 +9,18 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  */
 //                   												Portcullis
 
-public class AutonomousProgram002 extends CommandGroup {
-	
-    public  AutonomousProgram002() {
+public class AutonomousProgram002_Portcullis extends CommandGroup {
+	 // portcullis
+    public  AutonomousProgram002_Portcullis() {
     	
     	addParallel(new ArmMoveToAngle(Robot.arm.getOuterLimit(),.6)); // move arm to floor
-    	addSequential(new DriveTrain_ToDistance(42.,.6));// drive to place arm under portcullis
+    	addSequential(new DriveTrain_ToDistance(59.,.6));// drive to place arm under portcullis
+//       	addSequential(new ArmMoveToAngle(200., .4 ));
+//    	addSequential(new ArmMoveToAngle(Robot.arm.getOuterLimit(),.6)); // move arm to floor
+//        addSequential(new DriveTrain_ToDistance(59.,.6));// drive to place arm under portcullis
     	addSequential(new TimeDelay(2.));
-    	addParallel(new ArmMoveToAngle(180., .4 )); // raise arm to life portcullis gate
+    	addSequential(new ArmMoveToAngle(160., .4 ));
+    	addSequential(new TimeDelay(.5)); // raise arm to life portcullis gate
     	addSequential(new DriveTrain_ToDistance(134,1.)); // start moving robot forward
     	
     	

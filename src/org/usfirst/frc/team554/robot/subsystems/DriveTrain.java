@@ -21,6 +21,7 @@ public class DriveTrain extends Subsystem {
     private Encoder left_encoder, right_encoder;
     private AnalogGyro gyro;
     private Solenoid gearShiftSolenoid;
+    private double distanceToSlowDown;
     private boolean wasHeld;
     
     public DriveTrain(){
@@ -33,6 +34,7 @@ public class DriveTrain extends Subsystem {
     	gearShiftSolenoid = new Solenoid(0);
     	
     	drive.setSafetyEnabled(false);
+    	distanceToSlowDown = 20.0;
     	
     	left_encoder.setDistancePerPulse(0.0486947*127/134);//correction value based on test.
     	right_encoder.setDistancePerPulse(0.0486947*127/134);
@@ -48,12 +50,44 @@ public class DriveTrain extends Subsystem {
     	setDefaultCommand(new DriveTrain_JoyStickDrive());
     }
     
-    public void driveAutomaticStraight(double speed)//method to be used by the robot when it is moving in a straight line in autonomous
+    public void driveAutomaticTurn( double angle){
+    	
+    	// These things do the exact same thing. B is just easier to read.
+    	
+    	//A
+    	double z = (angle > 0 ) ? 1.0 : -1.0 ;
+    	
+    	//B
+    	if (angle > 0){
+    		z = 1.0;
+    	}
+    	else {
+    		z = -1.0;
+    	}
+    	
+    	
+    	
+  
+    	
+    	drive.arcadeDrive(0,z);
+    }
+
+    
+    public void driveAutomaticStraight(double speed, double distance)//method to be used by the robot when it is moving in a straight line in autonomous
     {//remember to put something that resets the gyro when the driving is first begun in the autonomous code list.
     	double z = 0;
     	double Kp = -0.025;
     	double angle = gyro.getAngle();
     	z = Kp * angle;
+    	if ( Math.abs( speed) > 0.4 ){
+    		if ( (distance - getDistance()) <= distanceToSlowDown && (distance - getDistance()) > 0 ){
+    			speed = ((speed - 0.4) / 20 * (distance - getDistance()) + 0.4);
+    		}
+    		else if ( (getDistance()- distance ) <= distanceToSlowDown && (getDistance()- distance) > 0 ){
+    			speed =  -1*((speed - 0.4) / 20 * (distance - getDistance()) + 0.4);
+    		}
+    		
+    	}	
     	
     	drive.arcadeDrive(-speed, z);
     }
@@ -68,7 +102,26 @@ public class DriveTrain extends Subsystem {
     	double Kp = -0.025; // constant that gives magnitude of rotation correction (recomended is 0.03)
     	
     	if (joystick_driver.getRawButton(2) == true ){	
-    		z = joystick_driver.getZ();
+    		
+    		double c = 0.75; // C is the center of the logistic curve
+    		double k = (Math.log(100)-1) / c; // this shouldn't be changed unless my math is wrong
+    		if ( Math.abs(joystick_driver.getY()) >= 0.1){
+    			
+	    		if (joystick_driver.getZ() > 0 ){
+	    			z = 1 / ( 1 + Math.pow(Math.E, - k *( joystick_driver.getZ() - c)));
+	    		}
+	    		else if (joystick_driver.getZ() < 0){
+	    			z = - 1 / ( 1 + Math.pow(Math.E, - k *(-c - joystick_driver.getZ())));
+	    		}
+	    		else {
+	    			z = 0.0;
+	    		}
+    		}
+    		else{
+    			z = joystick_driver.getZ();
+    		}
+    		
+    		
     		wasHeld = true;
     	} else if (wasHeld && Math.abs(gyro.getRate()) <= 10.0 && !joystick_driver.getRawButton(2)){
     		gyro.reset();
@@ -98,9 +151,10 @@ public class DriveTrain extends Subsystem {
     	return (left_encoder.getDistance() + right_encoder.getDistance())/2;
     }
     
-    public AnalogGyro getGyro(){
-    	return this.gyro;
+    public double getGyroAngle(){
+    	return this.gyro.getAngle();
     }
+    
     
     public void gearUp()
     {
@@ -110,6 +164,10 @@ public class DriveTrain extends Subsystem {
     public void gearDown()
     {
     	gearShiftSolenoid.set(false);
+    }
+    
+    public Boolean getGear(){
+    	return gearShiftSolenoid.get();
     }
     
     public void log() {

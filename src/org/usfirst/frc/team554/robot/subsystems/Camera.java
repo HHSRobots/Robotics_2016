@@ -5,9 +5,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import com.ni.vision.NIVision;
 import com.ni.vision.NIVision.FlipAxis;
-//import com.ni.vision.NIVision.DrawMode;
+import com.ni.vision.NIVision.DrawMode;
 import com.ni.vision.NIVision.Image;
-//import com.ni.vision.NIVision.ShapeMode;
+import com.ni.vision.NIVision.ShapeMode;
 
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.Joystick;
@@ -42,7 +42,7 @@ public class Camera extends Subsystem {
         frame = NIVision.imaqCreateImage(NIVision.ImageType.IMAGE_RGB, 0);
         // Server that we'll give the img to
         server = CameraServer.getInstance();
-        conversionRate = .1135;
+        conversionRate = -0.35;
         camControl = new Servo(1);
     }
     // Put methods for controlling this subsystem
@@ -102,10 +102,10 @@ public class Camera extends Subsystem {
 	 */
     public void updateCam()
     {
-        //NIVision.Rect rect = new NIVision.Rect(0, 320, 480, 1);
+        NIVision.Rect rect = new NIVision.Rect(0, 320, 480, 1);
     	NIVision.IMAQdxGrab(curCam, frame, 1);
-    	//NIVision.imaqDrawShapeOnImage(frame, frame, rect,
-        //        DrawMode.DRAW_VALUE, ShapeMode.SHAPE_RECT, 0.0f);
+    	NIVision.imaqDrawShapeOnImage(frame, frame, rect,
+                DrawMode.DRAW_VALUE, ShapeMode.SHAPE_RECT, 0.0f);
     	NIVision.imaqFlip(frame, frame, FlipAxis.CENTER_AXIS);
         server.setImage(frame);
     }
@@ -125,7 +125,7 @@ public class Camera extends Subsystem {
     	SmartDashboard.putNumber("Throttlesdfdfdffddfdfdffddf",currentAngle);
     	
        	//camControl.set((currentAngle*(1.75/2.)+(1.-(1.75/2.))));
-       	camControl.set(currentAngle*conversionRate+conversionRate);
+       	camControl.set(currentAngle*conversionRate-conversionRate);
     }
    
 }

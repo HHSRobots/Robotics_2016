@@ -3,6 +3,7 @@ package org.usfirst.frc.team554.robot.subsystems;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.command.Subsystem;
 //import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 //
 public class PDP extends Subsystem {
@@ -23,6 +24,8 @@ public class PDP extends Subsystem {
         //setDefaultCommand(new MySpecialCommand());
     }
     public void log() {
+    	SmartDashboard.putNumber("Lefts wheels power output",pdp.getCurrent(8));
+        SmartDashboard.putNumber("Right Wheels power output",pdp.getCurrent(9));
     }
 }
 
